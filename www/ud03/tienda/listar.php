@@ -18,7 +18,7 @@
     <?php
         //Obter conexión
         //Seleccionar bd
-        //Consulta obtención dos usuario (array)
+        //Consulta obtención dos usuarios (array)
         //Crear lista de usuarios
         //  - cada usuario mostra dous enlaces (editar e borrar)
         //  - editar.php?id=4
