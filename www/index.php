@@ -10,6 +10,7 @@
             <?php
             
                 echo "<h1>¡Hola, Bienvenido al módulo de DWCS!</h1>";
+                echo $_SERVER['REQUEST_METHOD'];
             ?>
         </div>
     </body>
