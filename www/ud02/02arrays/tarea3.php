@@ -55,6 +55,11 @@ function copiarArray ($array){
     return $copia;
 }
 
+/**
+ * Otra forma de llevar a cabo la misma tarea:
+ * 
+ */
+$copia [] = [$simpsons[3], $simpsons[4], $simpsons[5], "Pera"];
 $copia = copiarArray($simpsons);
 var_dump($copia);
 
