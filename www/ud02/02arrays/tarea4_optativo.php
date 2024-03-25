@@ -16,5 +16,18 @@ Con la información anterior, realiza las seguintes tareas:
 1. Crea la estrutura de datos y almacena toda la información anterior.
 2. Utilizando a instrución `foreach` y listas HTML,  imprime toda la información almacenada en formato de tabla.
 */
+//Convertir el string en un array multidimensional:
+$informacion = "Tokyo,Japan,Asia;Mexico City,Mexico,North America;New York City,USA,North America;Mumbai,India,Asia;Seoul,Korea,Asia;Shanghai,China,Asia;Lagos,Nigeria,Africa;Buenos Aires,Argentina,South America;Cairo,Egypt,Africa;London,UK,Europe";
+$array_elementos = explode(";",$informacion);
+foreach($array_elementos as $clave => $elemento) {
+    $array_elementos[$clave] = explode(",", $elemento);
+}
+foreach($array_elementos as $array){
+    echo "<tr>";
+    foreach ($array as $elemento){
+        echo "<td>$elemento</td>";
+    }
+    echo "</tr>";
+}
 ?>
 </table>
