@@ -85,24 +85,28 @@
             $precioFantaNaranja = 0.90;
             $precioTrinaManzana = 1.10;
             if (!empty($_POST["checkbox"])){
+                //En caso de seleccionar productos y no marcar la cantidad, genera un resultado incoherente.
                 $cantidadCola = $_POST["cantidadCola"];
                 $cantidadPepsi = $_POST["cantidadPepsi"];
                 $cantidadFantaNaranja = $_POST["cantidadFantaNaranja"];
                 $cantidadTrinaManzana = $_POST["cantidadTrinaManzana"];
                 $resultado = "Pediste ";
                 foreach ($_POST["checkbox"] as $valor){
-                    if ($valor == "Coca Cola"){
+                    if ($valor == "Coca Cola" && $cantidadCola != 0){
                         $resultado = $resultado . $cantidadCola . " " . $valor;
-                    } else if ($valor == "Pepsi Cola"){
+                    } else if ($valor == "Pepsi Cola" && $cantidadPepsi != 0){
                         $resultado = $resultado . $cantidadPepsi . " " . $valor;
-                    } else if ($valor == "Fanta Naranja"){
+                    } else if ($valor == "Fanta Naranja" && $cantidadFantaNaranja != 0){
                         $resultado = $resultado . $cantidadFantaNaranja . " " . $valor;
-                    } else if ($valor == "Trina Manzana"){
+                    } else if ($valor == "Trina Manzana" && $cantidadTrinaManzana != 0){
                         $resultado = $resultado . $cantidadTrinaManzana . " " . $valor;
                     }
+                    /*Aparecen tantas comas como elemento tenga el array 'checkbox', como puedo evitarlo?
+                        POSIBLE SOLUCIÓN: Crear un array multidimensional que incorpore los productos seleccionados, la cantidad y sus precios.
+                    */
                     $resultado = $resultado . ", ";
                     /*Como puedo conseguir que, en caso de seleccionar varios productos y estar en el último elemento, aparezca una 'y' entre el penúltimo y último elemento??
-                        POSIBLE SOLUCIÓ: Usar apuntadores para recorrer el array
+                        POSIBLE SOLUCIÓN: Usar apuntadores para recorrer el array
                     */
                 }
                 $resultado = $resultado . "precio total a pagar ";
