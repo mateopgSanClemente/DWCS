@@ -21,6 +21,7 @@ include("menu.php");
 include("pictures.php");
 include("content.php");
 include("sidebar.php");
+include("footer.php");
 ?>
 
 <!DOCTYPE html>
@@ -62,9 +63,8 @@ include("sidebar.php");
 				</div>
 			</div>
 			<!--Aquí va footer-->
-			<div id="footer">
-				<p>Copyright (c) 2012 meusitio.com. All rights reserved. Design by <a href="http://www.freecsstemplates.org">FCT</a>.
-				</p>
-			</div>
+			<?php
+				footer();
+			?>
 		</body>
 	</html>
