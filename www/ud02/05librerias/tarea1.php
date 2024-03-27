@@ -1,8 +1,8 @@
 <?php 
 /**Realiza los seguintes pasos:
 
-1. Crea un fichero PHP a modo de librería con todas las funciones creadas, llámale utilidades.php.
-2. Escribe la diferencia entre `include`, `include_once`, `require` y `require_once` dentro del código de la librería de funciones como un comentario del código fuente.
+1. Crea un fichero PHP a modo de librería con todas las funciones creadas, llámale utilidades.php. --HECHO--
+2. Escribe la diferencia entre `include`, `include_once`, `require` y `require_once` dentro del código de la librería de funciones como un comentario del código fuente. --HECHO--
 3. Divide el `index.php` de tal forma que tengas distintos recursos repartidos en ficheros:
 
 Fichero         | Contiene el `div` con `id`
@@ -16,6 +16,7 @@ Fichero         | Contiene el `div` con `id`
 
 Modifica el `index.php` para que cargue los recursos indicados en el paso anterior
 */
+include ("logo.php");
 ?>
 
 <!DOCTYPE html>
@@ -29,13 +30,9 @@ Modifica el `index.php` para que cargue los recursos indicados en el paso anteri
 
 			<div id="header" class="container">
 
-				<div id="logo">
-					<h1>
-						<a href="#">PHP</a>
-					</h1>
-					<p>template design by <a href="http://www.freecsstemplates.org">FCT</a>
-					</p>
-				</div>';
+				<?php
+					logo();
+				?>
 
 				<div id="menu">
 					<ul>

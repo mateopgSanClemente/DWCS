@@ -1,5 +1,17 @@
 <?php 
-
+/**
+ * include: analiza el contenido del fichero que se indica y lo incluye como parte
+ * del fichero actual, justo en la línea donde se incluye la directiva. La dirección del fichero
+ * externo puede seleccionarse mediante una ruta absoluta o relativa. Como base se toma
+ * la ruta expecificada en la directiva include_path del fichero php.ini. Si no se encuentre ahí
+ * se buscará en el directorio del guión actúal o en el directorio de ejecución.
+ * include_once: funciona como include, pero solo incluye aquellos ficheros que todavía no se hayan
+ * incluido.
+ * requiere: como include, pero si el fichero señalado en esta directiva no se encuentra, produce
+ * un error fatal que detiene la ejecución del guión
+ * require_once: asegura la inclusión del fichero indicado solo una vez y genenra un error si no se puede
+ * llevar a cabo.
+ */
 // 1. Crea una función que reciba un carácter e imprima se o carácter é un díxito entre 0 e 9.
 // Opción A
 function es_digito_a($caracter) {
