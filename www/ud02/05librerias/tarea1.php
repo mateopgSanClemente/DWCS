@@ -17,6 +17,7 @@ Fichero         | Contiene el `div` con `id`
 Modifica el `index.php` para que cargue los recursos indicados en el paso anterior
 */
 include ("logo.php");
+include ("menu.php");
 ?>
 
 <!DOCTYPE html>
@@ -33,26 +34,8 @@ include ("logo.php");
 				<?php
 					logo();
 				?>
-
-				<div id="menu">
-					<ul>
-						<li class="current_page_item">
-							<a href="#">Homepage</a>
-						</li>
-						<li>
-							<a href="#">Blog</a>
-						</li>
-						<li>
-							<a href="#">Photos</a>
-						</li>
-						<li>
-							<a href="#">About</a>
-						</li>
-						<li>
-							<a href="#">Contact</a>
-						</li>
-					</ul>
-				</div>
+				<!--Aquí va el ménu-->
+				
 
 
 			</div>
