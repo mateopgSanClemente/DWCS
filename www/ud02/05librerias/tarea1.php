@@ -19,6 +19,7 @@ Modifica el `index.php` para que cargue los recursos indicados en el paso anteri
 include("logo.php");
 include("menu.php");
 include("pictures.php");
+include("content.php");
 ?>
 
 <!DOCTYPE html>
@@ -39,7 +40,6 @@ include("pictures.php");
 					menu();
 				?>
 			</div>
-			<!--Aquí va el contenido de "pictures"-->
 				<?php
 					pictures();
 				?>
@@ -48,10 +48,11 @@ include("pictures.php");
 				<div id="bg1">
 					<div id="bg2">
 						<div id="bg3">
-							<div id="content">
-								<h2>Welcome to our website</h2>
-								<p> This is the DIV with ID content</p>
-							</div>
+							<!--Aqui va content-->
+							<?php
+								content();
+							?>
+							<!--Aqui va sidebar-->
 							<div id="sidebar">
 								<h2>Paesent scelerisque</h2>
 								<ul>
@@ -70,7 +71,7 @@ include("pictures.php");
 					</div>
 				</div>
 			</div>
-			
+			<!--Aquí va footer-->
 			<div id="footer">
 				<p>Copyright (c) 2012 meusitio.com. All rights reserved. Design by <a href="http://www.freecsstemplates.org">FCT</a>.
 				</p>
