@@ -16,8 +16,9 @@ Fichero         | Contiene el `div` con `id`
 
 Modifica el `index.php` para que cargue los recursos indicados en el paso anterior
 */
-include ("logo.php");
-include ("menu.php");
+include("logo.php");
+include("menu.php");
+include("pictures.php");
 ?>
 
 <!DOCTYPE html>
@@ -34,59 +35,14 @@ include ("menu.php");
 				<?php
 					logo();
 				?>
-				<!--Aquí va el ménu-->
-				
-
-
+				<?php
+					menu();
+				?>
 			</div>
-
-			<div id="pictures">
-
-				<ul id="gallery">
-					<li>
-						<a href="images/img01_big.jpg">
-							<img src="images/img01.jpg" title="Phasellus nec erat sit amet nibh pellentesque congue." alt="" />
-						</a>
-					</li>
-					<li>
-						<a href="images/img02_big.jpg">
-							<img src="images/img02.jpg" title="Phasellus nec erat sit amet nibh pellentesque congue." alt="" />
-						</a>
-					</li>
-					<li>
-						<a href="images/img03_big.jpg">
-							<img src="images/img03.jpg" title="Phasellus nec erat sit amet nibh pellentesque congue." alt="" />
-						</a>
-					</li>
-					<li>
-						<a href="images/img04_big.jpg">
-							<img src="images/img04.jpg" title="Phasellus nec erat sit amet nibh pellentesque congue." alt="" />
-						</a>
-					</li>
-					<li>
-						<a href="images/img02_big.jpg">
-							<img src="images/img02.jpg" title="Phasellus nec erat sit amet nibh pellentesque congue." alt="" />
-						</a>
-					</li>
-					<li>
-						<a href="images/img01_big.jpg">
-							<img src="images/img01.jpg" title="Phasellus nec erat sit amet nibh pellentesque congue." alt="" />
-						</a>
-					</li>
-					<li>
-						<a href="images/img04_big.jpg">
-							<img src="images/img04.jpg" title="Phasellus nec erat sit amet nibh pellentesque congue." alt="" />
-						</a>
-					</li>
-					<li>
-						<a href="images/img03_big.jpg">
-							<img src="images/img03.jpg" title="Phasellus nec erat sit amet nibh pellentesque congue." alt="" />
-						</a>
-					</li>
-				</ul>
-				<br class="clear" />
-
-			</div>
+			<!--Aquí va el contenido de "pictures"-->
+				<?php
+					pictures();
+				?>
 
 			<div id="page">
 				<div id="bg1">
