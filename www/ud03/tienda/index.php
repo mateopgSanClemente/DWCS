@@ -10,18 +10,30 @@
 </head>
 
 <body>
-    <?php
-        include("lib/base_datos.php");
-        $conexion = get_conexion();
-        //crear_bd_tienda($conexion);
-        //seleccionar_bd_tienda($conexion);
-        //crear_tabla_usuario($conexion);
 
-    ?>
     <h1>Tienda IES San Clemente</h1>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
     </script>
+    <?php
+    //También podría utilizar un require
+        include("lib/base_datos.php");
+        //MEDIANTE PDO:
+        //Crear la conexion
+        $conPDO = get_conexion();
+        //Crear la base de datos
+        crear_bd_tienda($conPDO);//<---PROBLEMA
+        //Seleccionar bd tienda:entiendo que la bd se selecciona a través de la conexion?
+        seleccionar_bd_tienda($conPDO);
+        //Crear tabla cliente
+        crear_tabla_mysql($conPDO);
+        //Cerrar conexión
+        cerrarConexion($conPDO);
+        /* Desde el punto de vista profesional, no se incluyen buenas práctivas en el 
+        desarrollo de la base de datos. Por ejemplo, cada vez que se recargar index.php,
+        no tiene sentid hacer esto.
+         */
+    ?>
     <p>
         <a class="btn btn-primary" href="dar_de_alta.php" role="button"> Alta usuarios</a>
         <a class="btn btn-primary" href="listar.php" role="button"> Listar usuarios</a>

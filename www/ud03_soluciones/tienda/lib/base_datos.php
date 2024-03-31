@@ -19,7 +19,7 @@ function seleccionar_bd_tienda($conexion)
 function ejecutar_consulta($conexion, $sql)
 {
     $resultado = $conexion->query($sql);
-
+    
     if ($resultado == false) {
         die($conexion->error);
     }

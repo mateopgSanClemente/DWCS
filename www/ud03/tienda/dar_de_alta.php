@@ -12,7 +12,7 @@
 <body>
     <h1>Alta de usuario </h1>
     <?php
-        //Comprobar se veñen datos polo $_POST
+        //Comprobar se veñen datos polo $_POST OJO!-> Solo si llegaron datos vía POST
         //Conexión
         //Seleccionar bd
         //Executar o INSERT
@@ -23,7 +23,11 @@
 
     <p>Formulario de alta</p>
     <!-- o "action" chama a dar_de_alta.php de xeito reflexivo-->
-    
+    <form action="dar_de_alta.php" method="POST">
+        <label for="nombre">
+            <input type="text" name="nombre" id="nombre">
+        </label>
+    </form>
     <footer>
         <p>
             <a href='index.php'>Página de inicio</a>
