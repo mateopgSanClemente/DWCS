@@ -24,6 +24,25 @@
         //  - editar.php?id=4
         //  - borrar.php?id=7
     ?>
+    <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellidos</th>
+        <th scope="col">Edad</th>
+        <th scope="col">Provincia</th>
+        <th scope="col">Borrar</th>
+        <th scope="col">Editar</th>
+      </tr>
+
+    </thead>
+    <tbody>
+
+<?php
+
+?>
+    </tbody>
+</table>
     <footer>
         <p>
             <a href='index.php'>Página de inicio</a>

@@ -22,8 +22,8 @@
         //Crear la conexion
         $conPDO = get_conexion();
         //Crear la base de datos
-        crear_bd_tienda($conPDO);//<---PROBLEMA
-        //Seleccionar bd tienda:entiendo que la bd se selecciona a través de la conexion?
+        crear_bd_tienda($conPDO);
+        //Seleccionar bd tienda:
         seleccionar_bd_tienda($conPDO);
         //Crear tabla cliente
         crear_tabla_mysql($conPDO);

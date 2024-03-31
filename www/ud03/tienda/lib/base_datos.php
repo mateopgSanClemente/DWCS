@@ -65,7 +65,7 @@ function cambiar_base_datos($conPDO, $baseDatos){
 //CREAR UNA TABLA MYSQL
 function crear_tabla_mysql($conPDO){
     try{
-        $sql="CREATE TABLE Clientes (
+        $sql="CREATE TABLE IF NOT EXISTS Clientes (
             id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
             nombre VARCHAR(50) NOT NULL,
             apellido VARCHAR(100),
@@ -83,8 +83,9 @@ function crear_tabla_mysql($conPDO){
 //ESTA FUNCIÓN TENGO QUE MODIFICARLA PARA QUE RECOJA LA INFORMACIÓN DEL FOMRULARIO!!
 function insertar_datos_tabla ($conPDO, $nombre, $apellido, $edad, $provincia){
     try{
-        $insertar = "INSERT INTO tienda (nombre, apellido, edad, provincia)
-        VALUES ($nombre, $apellido, $edad, $provincia)";
+        $sql = "INSERT INTO Clientes (nombre, apellido, edad, provincia)
+        VALUES ('$nombre', '$apellido', '$edad', '$provincia')";
+        ejecutar_consulta($conPDO, $sql);
     } catch(PDOException $e){
         echo "Se produjo un error: " . $e->getMessage();
     }
@@ -106,8 +107,19 @@ function seleccionar_datos($conPDO){
     }
 }
 
+//CONSULTAR TABLA
+function consultar_tabla_tienda($conPDO){
+    try{
+    $sql="SELECT * FROM tienda";
+    ejecutar_consulta($conPDO, $sql);
+    }catch(PDOException $e){
+        echo"Se produjo un error en la consulta de los datos: " . $e->getMessage();
+    }
+}
+
 //CERRAR LA CONEXIÓN
 function cerrarConexion ($conPDO){
     //CERRAR CONEXIÓN A LA BASE DATOS
     $conPDO = null;
+    echo"<br>La conexión se cerró correctamente.";
 }
