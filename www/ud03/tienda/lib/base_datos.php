@@ -81,6 +81,7 @@ function crear_tabla_mysql($conPDO){
 }
 //INSERTAR DATOS EN LA TABLA. HACER QUE MUESTRE TAMBIÉN EL ÚLTIMO ID!
 //ESTA FUNCIÓN TENGO QUE MODIFICARLA PARA QUE RECOJA LA INFORMACIÓN DEL FOMRULARIO!!
+//MODIFICARLO PARA QUE FUNCIONE COMO UN CONSULTA PREPARADA
 function insertar_datos_tabla ($conPDO, $nombre, $apellido, $edad, $provincia){
     try{
         $sql = "INSERT INTO Clientes (nombre, apellido, edad, provincia)
@@ -111,12 +112,26 @@ function seleccionar_datos($conPDO){
 function consultar_tabla_tienda($conPDO){
     try{
     $sql="SELECT * FROM tienda";
-    ejecutar_consulta($conPDO, $sql);
+    $consulta = ejecutar_consulta($conPDO, $sql);
     }catch(PDOException $e){
         echo"Se produjo un error en la consulta de los datos: " . $e->getMessage();
     }
 }
 
+//CONSULTA PREPARADA
+function consulta_preparada($conPDO){
+    //Preparar consulta
+    $sql = "SELECT * FROM Clientes";
+    try{
+    $stmt = $conPDO->prepare($sql);
+    //Ejecutar consulta
+    $stmt->$execute();
+    //Obtiene los resultados como un array asociativo
+    $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }catch(PDOExceptio $e){
+        echo"Error al ejecutar la consulta: " . $e->getMessage();
+    }
+}
 //CERRAR LA CONEXIÓN
 function cerrarConexion ($conPDO){
     //CERRAR CONEXIÓN A LA BASE DATOS
