@@ -15,18 +15,11 @@
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
     </script>
     <p>Lista de usuarios con enlaces para borrar y editar</p>
-    <?php
-        //Obter conexión
-        //Seleccionar bd
-        //Consulta obtención dos usuarios (array)
-        //Crear lista de usuarios
-        //  - cada usuario mostra dous enlaces (editar e borrar)
-        //  - editar.php?id=4
-        //  - borrar.php?id=7
-    ?>
+
     <table class="table">
     <thead class="thead-light">
       <tr>
+        <th scope="col">ID</th>
         <th scope="col">Nombre</th>
         <th scope="col">Apellidos</th>
         <th scope="col">Edad</th>
@@ -34,7 +27,31 @@
         <th scope="col">Borrar</th>
         <th scope="col">Editar</th>
       </tr>
-
+      <?php
+        include ("lib/base_datos.php");
+        //Obter conexión
+        $conPDO = get_conexion();
+        //Seleccionar bd
+        seleccionar_bd_tienda($conPDO);
+        //Consulta obtención dos usuarios (array)
+        $clientes = consulta($conPDO);
+        //consulta_alternativa($conPDO);
+        //Crear lista de usuarios
+        //  - cada usuario mostra dous enlaces (editar e borrar)
+        //  - editar.php?id=4
+        //  - borrar.php?id=7       
+        //Imprimir Clientes
+        
+        foreach($clientes as $cliente){
+            echo "<tr>";
+            foreach($cliente as $dato){
+                echo"<td>$dato</td>";
+            }
+            echo"<td><a href=\"editar.php?id=".$cliente["id"]."\">Editar</a></td>";
+            echo"<td><a href=\"borrar.php?id=".$cliente["id"]."\">Borrar</a></td>";
+            echo"</tr>";
+        }
+    ?>
     </thead>
     <tbody>
 

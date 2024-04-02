@@ -16,7 +16,6 @@ function get_conexion(){
         $conPDO = new PDO($dsn, $username, $password);
         //Configurar el modo de error y excepcion de PDO
         $conPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        echo "Conexión correcta<br>";
         return $conPDO;
     }catch(PDOException $e){
         echo "Fallo en la conexión: " . $e->getMessage();
@@ -51,7 +50,6 @@ function crear_bd_tienda($conPDO){
         $sql = "CREATE DATABASE IF NOT EXISTS tienda";
         //USAR exec() porque no se retornan datos ¿?
         ejecutar_consulta($conPDO, $sql);
-        echo "Base de datos creada correctamente<br>";
     }catch(PDOException $e){
         echo $sql . "<br>" . $e->getMessage();
     }
@@ -74,7 +72,6 @@ function crear_tabla_mysql($conPDO){
             );";
         //SE EJECUTA LA SENTENCIA SQL
         ejecutar_consulta($conPDO,$sql);
-        echo "La tabla fue creada correctamente.";
     }catch(PDOException $e){
         echo "Fallo en la conexión: " . $e->getMessage();
     }
@@ -98,7 +95,7 @@ function seleccionar_datos($conPDO){
         //Preparar el select
         $stmt = $conPDO->prepare("SELECT id, nombre, apellido, edad, provincia FROM Usuarios");
         $stmt->execute();
-        //CONVERTIR EL RESULTADO EN UN ARRAY ASOCIATIVO
+        //CONVERTIR EL RESULTADO EN UN ARRAY MULTIDIMENSIONAL ASOCIATIVO
         $resultado=$stmt->setFetchMode(PDO::FETCH_ASSOC);
         foreach($stmt->fetchAll() as $k=>$v){
             echo $v;
@@ -119,22 +116,53 @@ function consultar_tabla_tienda($conPDO){
 }
 
 //CONSULTA PREPARADA
-function consulta_preparada($conPDO){
+function consulta($conPDO){
     //Preparar consulta
     $sql = "SELECT * FROM Clientes";
     try{
     $stmt = $conPDO->prepare($sql);
     //Ejecutar consulta
-    $stmt->$execute();
+    $stmt->execute();
     //Obtiene los resultados como un array asociativo
     $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $clientes;
     }catch(PDOExceptio $e){
         echo"Error al ejecutar la consulta: " . $e->getMessage();
     }
+    $stmt=null;
+}
+function consulta_alternativa($conPDO){
+    //Preparar consulta
+    $sql="SELECT * FROM Clientes";
+    try{
+        //Se realiza la consulta a través del método query().
+        $stmt=$conPDO->query($sql);
+        //Se indica el formato de los datos de la consulta para que sea un array asociativo
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        while($fila=$stmt->fetch()){
+            echo"<tr>";
+            foreach($fila as $dato){
+                echo"<td>$dato</td>";
+            }
+            echo"<td><a href=\"editar.php\">Editar</a></td>";
+            echo"<td><a href=\"borrar.php\">Borrar</a></td>";
+            echo"</tr>";
+            
+        }
+        $stmt=null;
+    }catch(PDOException $e){
+        echo"Se produjo un error en la consulta:".$e->getMessage()."<br>";
+    }
+}
+//EDITAR ELEMENTO TABLA CLIENTES
+//BORRAR ELEMENTO TABLA CLIENTES
+function borrar_datos($conPDO, $id){
+    $sql="DELETE FROM Clientes WHERE id=$id";
+    $conPDO->exec($sql);
+    $conPDO=null;
 }
 //CERRAR LA CONEXIÓN
 function cerrarConexion ($conPDO){
     //CERRAR CONEXIÓN A LA BASE DATOS
     $conPDO = null;
-    echo"<br>La conexión se cerró correctamente.";
 }
