@@ -47,8 +47,8 @@
             foreach($cliente as $dato){
                 echo"<td>$dato</td>";
             }
-            echo"<td><a href=\"editar.php?id=".$cliente["id"]."\">Editar</a></td>";
             echo"<td><a href=\"borrar.php?id=".$cliente["id"]."\">Borrar</a></td>";
+            echo"<td><a href=\"editar.php?id=".$cliente["id"]."\">Editar</a></td>";
             echo"</tr>";
         }
     ?>

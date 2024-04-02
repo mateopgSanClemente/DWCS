@@ -115,7 +115,6 @@ function consultar_tabla_tienda($conPDO){
     }
 }
 
-//CONSULTA PREPARADA
 function consulta($conPDO){
     //Preparar consulta
     $sql = "SELECT * FROM Clientes";
@@ -144,8 +143,8 @@ function consulta_alternativa($conPDO){
             foreach($fila as $dato){
                 echo"<td>$dato</td>";
             }
-            echo"<td><a href=\"editar.php\">Editar</a></td>";
-            echo"<td><a href=\"borrar.php\">Borrar</a></td>";
+            echo"<td><a href=\"editar.php?id=".$fila["id"]."\">Editar</a></td>";
+            echo"<td><a href=\"borrar.php?id=".$fila["id"]."\">Borrar</a></td>";
             echo"</tr>";
             
         }
@@ -154,7 +153,20 @@ function consulta_alternativa($conPDO){
         echo"Se produjo un error en la consulta:".$e->getMessage()."<br>";
     }
 }
+function consulta_id($conPDO, $id){
+    $sql="SELECT * FROM Clientes WHERE id=?";
+    $stmt=$conPDO->prepare($sql);
+    $stmt->execute([$id]);//Devuelve un booleando
+    $cliente = $stmt->fetchAll(PDO::FETCH_ASSOC);//Crea array asociativo
+    $stmt=null;
+    return $cliente;
+}
 //EDITAR ELEMENTO TABLA CLIENTES
+function editar_cliente($conPDO, $id, $nombre, $apellidos, $edad, $provincia){
+    $sql="UPDATE Clientes SET nombre=?, apellido=?, edad=?, provincia=? WHERE id=?";
+    $stmt=$conPDO->prepare($sql);
+    $stmt->execute([$nombre, $apellidos, $edad, $provincia, $id]);
+}
 //BORRAR ELEMENTO TABLA CLIENTES
 function borrar_datos($conPDO, $id){
     $sql="DELETE FROM Clientes WHERE id=$id";
