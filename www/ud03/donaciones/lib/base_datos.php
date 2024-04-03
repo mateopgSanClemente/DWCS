@@ -13,9 +13,9 @@
         }
     }
 
-    function seleccionar_db_donaciones($conPDO){
+    function seleccionar_bd_donaciones($conPDO){
         $sql="USE donacion";
-        $sql->exec($sql);
+        $conPDO->exec($sql);
     }
 
     function ejecutar_consulta($conPDO, $sql){
@@ -27,10 +27,10 @@
         }
     }
 
-    function crear_bd_donaciones($conPDO){
-        $sql="CREATE DATABASE IF NOT EXISTS donacion";
+    function crear_bd_donaciones($conPDO){    
         try{
-        ejecutar_consulta($conPDO, $sql);
+            $sql="CREATE DATABASE IF NOT EXISTS donacion";
+            ejecutar_consulta($conPDO, $sql);
         }catch(PDOException $e){
             echo"Se produjo un error en la creación de la base de datos: ".$e->getMessage();
         }
@@ -38,13 +38,13 @@
 
     function crear_tabla_donantes($conPDO){
         $sql="CREATE TABLE IF NOT EXISTS donantes(
-            id INT UNSIGNED AUTO INCREMENT PRIMARY KEY,
+            id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
             nombre VARCHAR(50) NOT NULL,
             apellidos VARCHAR(100) NOT NULL,
             edad INT NOT NULL CHECK (edad>=18 AND edad<=120),
             grupoSanguineo VARCHAR(3) NOT NULL CHECK (grupoSanguineo IN ('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-')),
-            codigoPostas INT NOT NULL CHECK (LENGTH(codigoPostal)=5),
-            telefonoMovil INT NOT NULL CHECK (LENGTH(telefonoMovil)=9)
+            codigoPostas INT NOT NULL,
+            telefonoMovil INT NOT NULL
         );";
         try{
             ejecutar_consulta($conPDO, $sql);
@@ -56,7 +56,7 @@
     function crear_tabla_historico($conPDO){
         $sql="CREATE TABLE IF NOT EXISTS historicos(
             id INT PRIMARY KEY,
-            idDonante INT,
+            idDonante INT UNSIGNED,
             FOREIGN KEY (idDonante) REFERENCES donantes(id),
             fechaDonacion DATE,
             fechaProxDonacion DATE AS (DATE_ADD(fechaDonacion, INTERVAL 4 MONTH))
@@ -89,7 +89,7 @@
             $stmt->bindParam(":telefonoMovil", $telefonoMovil);
             $stmt->execute();
         }catch(PDOException $e){
-            echo"Hubo un error a hora de crear la tabla 'donantes': " . $e->getMessage();
+            echo"Hubo un error a hora de insertar en la tabla 'donantes': " . $e->getMessage();
         }
     }
 

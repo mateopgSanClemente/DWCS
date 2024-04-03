@@ -1,3 +1,13 @@
+<?php
+    include ("lib/base_datos.php");
+    $conPDO=crear_conexion();
+    crear_bd_donaciones($conPDO);
+    seleccionar_bd_donaciones($conPDO);
+    crear_tabla_donantes($conPDO);
+    crear_tabla_historico($conPDO);
+    crear_tabla_administradores($conPDO);
+    $conPDO=null;
+?>
 <!doctype html>
 <html lang="en">
 
