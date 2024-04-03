@@ -20,7 +20,8 @@
 
     function ejecutar_consulta($conPDO, $sql){
         try{
-            $conPDO->exec($sql);
+            $consulta=$conPDO->exec($sql);
+            return $consulta;
         }catch(PDOException $e){
             echo"Se produjo un error en la consulta: " . $e->getMessage();
         }
@@ -95,7 +96,18 @@
     function mostrar_donantes($conPDO){
         try{
             $sql="SELECT * FROM donantes;";
-            ejecutar_consulta($conPDO, $sql);
+            $stmt=$conPDO->prepare($sql);
+            $stmt->execute();
+            //MODIFICAR PARA AJUSTAR A TABLA
+            while($donante=$stmt->fetch(PDO::FETCH_ASSOC)){
+                echo $donante['id'];
+                echo $donante['nombre'];
+                echo $donante['apellidos'];
+                echo $donante['edad'];
+                echo $donante['grupoSanguineo'];
+                echo $donante['codigoPostal'];
+                echo $donante['telefonoMovil'];
+            }
         } catch(PDOException $e){
             echo"Se produjo un error a la hora de seleccionar los datos de la tabla 'donantes': ".$e->getMessage();
         }
@@ -116,10 +128,77 @@
 
     function eliminar_donante($conPDO, $idDonante){
         try{
-            $sql="DELETE FROM donantes WHERE id=$idDonante;";
-            ejecutar_consulta($conPDO, $sql);
+            $sql="DELETE FROM donantes WHERE id=:idDonante;";
+            $stmt=$conPDO->prepare($sql);
+            $stmt->bindParam(":idDonante", $idDonante);
+            $stmt->execute();
         }catch(PDOException $e){
             echo"Se produjo un error a la hora de eliminar al usuario con id ".$idDonante.": ". $e->getMessage();
+        }
+    }
+
+    function mostrar_donaciones($conPDO, $idDonante){
+        try{
+            $sql="SELECT h.*,d.nombre, d.apellidos, d.edad, d.grupoSanguineo
+            FROM historicos h
+            JOIN donantes d ON h.idDonantes=d.id
+            WHERE h.idDonante=:idDonante
+            ORDER BY fechaDonacion DESC";
+            $stmt=$conPDO->prepare($sql);
+            $stmt->bindParam(":idDonante", $idDonante);
+            $stmt->execute();
+            while($donacion=$stmt->fetch(PDO::FETCH_ASSOC)){
+                //MODIFICAR PARA AJUSTAR A TABLA
+                echo $donacion["id"];
+                echo $donacion["idDonante"];
+                echo $donacion["nombre"];
+                echo $donacion["apellidos"];
+                echo $donacion["edad"];
+                echo $donacion["grupoSanguineo"];
+                echo $donacion["fechaDonancion"];
+                echo $donacion["fechaProxDonacion"];
+            }
+            if($stmt->rowCount()==0){
+                echo("No se encontró ninguna coincidencia");
+            }
+        }catch(PDOException $e){
+            echo"Se produjo un error a la hora de mostrar las donaciones: ".$e->getMessage();
+        }
+    }
+
+    function buscar_donante_codigo_postal($conPDO, $codigoPostal){
+        try{
+            $sql="SELECT d.*, h.*
+            FROM historicos
+            JOIN donantes d ON h.idDonantes=d.id
+            WHERE d.codigoPostas=:codigoPostal";
+            $stmt=$conPDO->prepare($sql);
+            $stmt->bindParam(":codigoPostal",$codigoPostal);
+            $stmt->execute();
+            //AJUSTAR A TABLA E INCLUIR LOS CASOS EN LOS QUE EL DONANTE NO HAYA REALIZADO DONACIONES
+            while($coincidencia=$stmt->fetch(PDO::FETCH_ASSOC)){
+                echo $coincidencia["nombre"];
+                echo $coincidencia["apellidos"];
+                echo $coincidencia["edad"];
+                echo $coincidencia["codigoPostal"];
+                echo $coincidencia["grupoSanguineo"];
+                echo $coincidencia["fechaProxDonacion"];
+            }
+        }catch(PDOException $e){
+            echo"Se produjo un error en la seleción de los campos: ".$e->getMessage();
+        }
+    }
+
+    function registrar_administrador($conPDO, $nombreUsuario, $pass){
+        try{
+        $sql="INSERT INTO administradores (nombreUsuario, pass)
+        VALUES (:nombreUsuario, :pass);";
+        $stmt=$conPDO->prepare($sql);
+        $stmt->bindParam(":nombreUsuario", $nombreUsuario);
+        $stmt->bindParam(":pass", $pass);
+        $stmt->execute();
+        }catch(PDOException $e){
+            "Se produjo un error a la hora de introducir los valores en la tabla 'administradores': ".$e->getMessage();
         }
     }
 ?>
