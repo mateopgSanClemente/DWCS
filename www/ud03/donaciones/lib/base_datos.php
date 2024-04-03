@@ -43,7 +43,7 @@
             apellidos VARCHAR(100) NOT NULL,
             edad INT NOT NULL CHECK (edad>=18 AND edad<=120),
             grupoSanguineo VARCHAR(3) NOT NULL CHECK (grupoSanguineo IN ('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-')),
-            codigoPostas INT NOT NULL,
+            codigoPostal INT NOT NULL,
             telefonoMovil INT NOT NULL
         );";
         try{
@@ -79,7 +79,7 @@
     function registrar_donante($conPDO, $nombre, $apellidos, $edad, $grupoSanguineo, $codigoPostal, $telefonoMovil){
         try{
             $sql="INSERT INTO donantes (nombre, apellidos, edad, grupoSanguineo, codigoPostal, telefonoMovil)
-            VALUES (:nombre, :apellido, :edad, :grupoSanguineo, :codigoPostal, :telefonoMovil);";
+            VALUES (:nombre, :apellidos, :edad, :grupoSanguineo, :codigoPostal, :telefonoMovil);";
             $stmt = $conPDO->prepare($sql);
             $stmt->bindParam(":nombre", $nombre);
             $stmt->bindParam(":apellidos", $apellidos);
