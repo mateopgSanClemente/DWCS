@@ -16,9 +16,55 @@
     <br>
     <h1>Buscar donantes</h1>
     <div>
-        Formulario para buscar donantes
+        Formulario para buscar donantes por codigo postal
+        <form action="buscar_donantes.php" method="POST">
+            <label for="codigoPostal">Código postal:</label>
+            <input type="text" name="codigoPostal" id="codigoPostal" maxlength="5" minlength="5" pattern="\d{5}" placeholder="Ej:36600">
+            <input type="submit" name="submitPostal" value="Buscar por codigo">
+        </form>
+        <form action="buscar_donantes.php" method="POST">
+            <label for="grupoSanguineo">Grupo sanguineo:</label>
+            <select name="grupoSanguineo" id="grupoSanguineo" required>
+                <option value="A-">A-</option>
+                <option value="A+">A+</option>
+                <option value="B-">B-</option>
+                <option value="B+">B+</option>
+                <option value="AB-">AB-</option>
+                <option value="AB+">AB+</option>
+                <option value="O-">O-</option>
+                <option value="O+">O+</option>
+            </select>
+            <input type="submit" name="submitGrupo" value="Buscar por grupo">
+        </form>
     </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Edad</th>
+                <th>Grupo sanguineo</th>
+                <th>Código postal</th>
+                <th>Fecha proxima donación</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+                include ("lib/base_datos.php");
+                if(isset($_POST["submitPostal"])){
+                    $codigoPostal=$_POST["codigoPostal"];
+                    if(strlen($codigoPostal)==5){
+                        $conPDO=crear_conexion();                      
+                        seleccionar_bd_donaciones($conPDO);
+                        buscar_donante_codigo_postal($conPDO, $codigoPostal);
+                        $conPDO=null;
+                    }
+                } else if (isset($_POST["submitGrupo"])){
 
+                }
+            ?>
+        </tbody>
+    </table>
     <footer>
         <p><a href='index.php'>Página de inicio</a></p>
     </footer>

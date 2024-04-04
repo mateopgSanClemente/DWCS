@@ -175,26 +175,36 @@
     function buscar_donante_codigo_postal($conPDO, $codigoPostal){
         try{
             $sql="SELECT d.*, h.*
-            FROM historicos
-            JOIN donantes d ON h.idDonantes=d.id
-            WHERE d.codigoPostas=:codigoPostal";
+            FROM donantes d
+            LEFT JOIN historicos h ON h.idDonante=d.id
+            WHERE d.codigoPostal=:codigoPostal
+            ORDER BY fechaProxDonacion DESC";
             $stmt=$conPDO->prepare($sql);
             $stmt->bindParam(":codigoPostal",$codigoPostal);
             $stmt->execute();
             //AJUSTAR A TABLA E INCLUIR LOS CASOS EN LOS QUE EL DONANTE NO HAYA REALIZADO DONACIONES
             while($coincidencia=$stmt->fetch(PDO::FETCH_ASSOC)){
-                echo $coincidencia["nombre"];
-                echo $coincidencia["apellidos"];
-                echo $coincidencia["edad"];
-                echo $coincidencia["codigoPostal"];
-                echo $coincidencia["grupoSanguineo"];
-                echo $coincidencia["fechaProxDonacion"];
+                echo"<tr>";
+                echo "<td>".$coincidencia["nombre"]."</td>";
+                echo "<td>".$coincidencia["apellidos"]."</td>";
+                echo "<td>".$coincidencia["edad"]."</td>";
+                echo "<td>".$coincidencia["grupoSanguineo"]."</td>";
+                echo "<td>".$coincidencia["codigoPostal"]."</td>";
+                if(isset($coincidencia["fechaProxDonacion"])){
+                    echo "<td>".$coincidencia["fechaProxDonacion"]."</td>";
+                } else {
+                    echo"<td>N/A</td>";
+                }
+                echo"</tr>";
             }
         }catch(PDOException $e){
             echo"Se produjo un error en la seleción de los campos: ".$e->getMessage();
         }
     }
 
+    function buscar_donante_grupo_sanguineo($conPDO, $grupoSanguineo){
+        
+    };
     function registrar_administrador($conPDO, $nombreUsuario, $pass){
         try{
         $sql="INSERT INTO administradores (nombreUsuario, pass)
