@@ -100,13 +100,18 @@
             $stmt->execute();
             //MODIFICAR PARA AJUSTAR A TABLA
             while($donante=$stmt->fetch(PDO::FETCH_ASSOC)){
-                echo $donante['id'];
-                echo $donante['nombre'];
-                echo $donante['apellidos'];
-                echo $donante['edad'];
-                echo $donante['grupoSanguineo'];
-                echo $donante['codigoPostal'];
-                echo $donante['telefonoMovil'];
+                echo"<tr>";
+                echo "<td>".$donante['id']."</td>";
+                echo "<td>".$donante['nombre']."</td>";
+                echo "<td>".$donante['apellidos']."</td>";
+                echo "<td>".$donante['edad']."</td>";
+                echo "<td>".$donante['grupoSanguineo']."</td>";
+                echo "<td>".$donante['codigoPostal']."</td>";
+                echo "<td>".$donante['telefonoMovil']."</td>";
+                echo"<td><a href=\"donar.php\">Registrar donación</a></td>";
+                echo"<td><a href=\"listar_donaciones.php\">Listar donación</a></td>";
+                echo"<td><a href=\"borrar_donante.php?id=".$donante['id']."\">Eliminar</a></td>";
+                echo"</tr>";
             }
         } catch(PDOException $e){
             echo"Se produjo un error a la hora de seleccionar los datos de la tabla 'donantes': ".$e->getMessage();
