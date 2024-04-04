@@ -198,12 +198,38 @@
                 echo"</tr>";
             }
         }catch(PDOException $e){
-            echo"Se produjo un error en la seleción de los campos: ".$e->getMessage();
+            echo"Se produjo un error en la consulta: ".$e->getMessage();
         }
     }
 
+
     function buscar_donante_grupo_sanguineo($conPDO, $grupoSanguineo){
-        
+        try{
+            $sql="SELECT d.*, h.*
+            FROM donantes d
+            LEFT JOIN historicos h ON h.idDonante=d.id
+            WHERE d.grupoSanguineo=:grupoSanguineo
+            ORDER BY h.fechaProxDonacion DESC";
+            $stmt=$conPDO->prepare($sql);
+            $stmt->bindParam(":grupoSanguineo",$grupoSanguineo);
+            $stmt->execute();
+            while($coincidencia=$stmt->fetch(PDO::FETCH_ASSOC)){
+                echo"<tr>";
+                echo "<td>".$coincidencia["nombre"]."</td>";
+                echo "<td>".$coincidencia["apellidos"]."</td>";
+                echo "<td>".$coincidencia["edad"]."</td>";
+                echo "<td>".$coincidencia["grupoSanguineo"]."</td>";
+                echo "<td>".$coincidencia["codigoPostal"]."</td>";
+                if(isset($coincidencia["fechaProxDonacion"])){
+                    echo "<td>".$coincidencia["fechaProxDonacion"]."</td>";
+                } else {
+                    echo"<td>N/A</td>";
+                }
+                echo"</tr>";
+            }
+        }catch(PDOException $e){
+            echo"Se produjo un error en la cosulta ".$e->getMessage();
+        }
     };
     function registrar_administrador($conPDO, $nombreUsuario, $pass){
         try{
