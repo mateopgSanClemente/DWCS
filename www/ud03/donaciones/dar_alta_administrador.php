@@ -1,3 +1,14 @@
+<?php
+    include ("lib/base_datos.php");
+    if(isset($_POST["submit"])){
+        $conPDO=crear_conexion();
+        $nombreAdmin=$_POST["nombreAdmin"];
+        $pass=$_POST["pass"];
+        seleccionar_bd_donaciones($conPDO);
+        registrar_administrador($conPDO, $nombreAdmin, $pass);
+        $conPDO=null;
+    }
+?>
 <!doctype html>
 <html lang="en">
 
@@ -17,6 +28,13 @@
     <h1>Alta de administrador</h1>
     <div>
         Formulario para dar de alta un administrador
+        <form action="dar_alta_administrador.php" method="POST">
+            <label for="nombreAdmin">Nombre administrador:</label>
+            <input type="text" name="nombreAdmin" maxlength="50" required>
+            <label for="pass">Contraseña:</label>
+            <input type="password" name="pass" id="pass" maxlength="200" required>
+            <input type="submit" name="submit" value="Agregar">
+        </form>
     </div>
 
     <footer>

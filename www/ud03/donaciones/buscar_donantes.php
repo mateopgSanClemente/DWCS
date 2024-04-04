@@ -60,8 +60,15 @@
                         $conPDO=null;
                     }
                 } else if (isset($_POST["submitGrupo"])){
-
+                    $grupoSanguineo=$_POST["grupoSanguineo"];
+                    if($grupoSanguineo=="A+" || $grupoSanguineo=="A-" || $grupoSanguineo=="B+" || $grupoSanguineo=="B-" || $grupoSanguineo=="AB+" && $grupoSanguineo=="AB-" && $grupoSanguineo=="O+" && $grupoSanguineo=="O-"){
+                        $conPDO=crear_conexion();
+                        seleccionar_bd_donaciones($conPDO);
+                        buscar_donante_grupo_sanguineo($conPDO, $grupoSanguineo);
+                        $conPDO=null;
+                    }
                 }
+                
             ?>
         </tbody>
     </table>

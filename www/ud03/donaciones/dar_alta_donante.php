@@ -63,7 +63,7 @@
                 <option value="O+">O+</option>
                 <option value="O-">O-</option>
             </select>
-            <!--LOS CAMPOS 'codigoPostal' y 'telefono' DE LA TABLA 'donantes' RECOGEN DATOS DE TIPO NÚMERICO, HAY FALLO SI USO UN CAMPO DE TIPO NUMERICO PARA RECOGER LOS DATOS EN EL FORMULARIO?-->
+            <!--LOS CAMPOS 'codigoPostal' y 'telefono' DE LA TABLA 'donantes' RECOGEN DATOS DE TIPO NÚMERICO, HAY ALGÚN PROBLEMA SI USO UN CAMPO DE TIPO TEXT PARA RECOGER LOS DATOS EN EL FORMULARIO?-->
             <label for="codigoPostal">Codigo postal:</label>
             <input type="text" name="codigoPostal" id="codigoPostal" minlength="5" maxlength="5" pattern="\d{5}" placeholder="Introduce un CP de 5 dígitos"required>
             <label for="telefonoMovil">Telefono móvil:</label>
