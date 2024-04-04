@@ -55,7 +55,7 @@
 
     function crear_tabla_historico($conPDO){
         $sql="CREATE TABLE IF NOT EXISTS historicos(
-            id INT PRIMARY KEY,
+            id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
             idDonante INT UNSIGNED,
             FOREIGN KEY (idDonante) REFERENCES donantes(id),
             fechaDonacion DATE,
@@ -98,7 +98,6 @@
             $sql="SELECT * FROM donantes;";
             $stmt=$conPDO->prepare($sql);
             $stmt->execute();
-            //MODIFICAR PARA AJUSTAR A TABLA
             while($donante=$stmt->fetch(PDO::FETCH_ASSOC)){
                 echo"<tr>";
                 echo "<td>".$donante['id']."</td>";
@@ -108,8 +107,8 @@
                 echo "<td>".$donante['grupoSanguineo']."</td>";
                 echo "<td>".$donante['codigoPostal']."</td>";
                 echo "<td>".$donante['telefonoMovil']."</td>";
-                echo"<td><a href=\"donar.php\">Registrar donación</a></td>";
-                echo"<td><a href=\"listar_donaciones.php\">Listar donación</a></td>";
+                echo"<td><a href=\"donar.php?id=".$donante['id']."\">Registrar donación</a></td>";
+                echo"<td><a href=\"listar_donaciones.php?id=".$donante['id']."\">Listar donación</a></td>";
                 echo"<td><a href=\"borrar_donante.php?id=".$donante['id']."\">Eliminar</a></td>";
                 echo"</tr>";
             }
@@ -118,7 +117,7 @@
         }
     }
 
-    function registrar_donacion($conPDO, $idDonante){
+    function registrar_donacion($conPDO, $idDonante, $fechaDonacion){
         try{
             $sql="INSERT INTO historicos (idDonante, fechaDonacion)
             VALUES (:idDonante, :fechaDonacion);";
@@ -144,9 +143,9 @@
 
     function mostrar_donaciones($conPDO, $idDonante){
         try{
-            $sql="SELECT h.*,d.nombre, d.apellidos, d.edad, d.grupoSanguineo
+            $sql="SELECT h.id, h.idDonante, h.fechaDonacion, h.fechaProxDonacion,d.nombre, d.apellidos, d.edad, d.grupoSanguineo
             FROM historicos h
-            JOIN donantes d ON h.idDonantes=d.id
+            JOIN donantes d ON h.idDonante=d.id
             WHERE h.idDonante=:idDonante
             ORDER BY fechaDonacion DESC";
             $stmt=$conPDO->prepare($sql);
@@ -154,14 +153,16 @@
             $stmt->execute();
             while($donacion=$stmt->fetch(PDO::FETCH_ASSOC)){
                 //MODIFICAR PARA AJUSTAR A TABLA
-                echo $donacion["id"];
-                echo $donacion["idDonante"];
-                echo $donacion["nombre"];
-                echo $donacion["apellidos"];
-                echo $donacion["edad"];
-                echo $donacion["grupoSanguineo"];
-                echo $donacion["fechaDonancion"];
-                echo $donacion["fechaProxDonacion"];
+                echo "<tr>";
+                echo "<td>".$donacion["id"]."</td>";
+                echo "<td>".$donacion["idDonante"]."</td>";
+                echo "<td>".$donacion["nombre"]."</td>";
+                echo "<td>".$donacion["apellidos"]."</td>";
+                echo "<td>".$donacion["edad"]."</td>";
+                echo "<td>".$donacion["grupoSanguineo"]."</td>";
+                echo "<td>".$donacion["fechaDonacion"]."</td>";
+                echo "<td>".$donacion["fechaProxDonacion"]."</td>";
+                echo "</tr>";
             }
             if($stmt->rowCount()==0){
                 echo("No se encontró ninguna coincidencia");

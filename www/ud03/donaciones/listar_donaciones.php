@@ -17,6 +17,30 @@
     <h1>Gestión donacion de Sangre</h1>
     <div>
         Listado de donaciones
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>ID donante</th>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>Edad</th>
+                    <th>Grupo sanguineo</th>
+                    <th>Fecha donación</th>
+                    <th>Fecha proxima donación</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                    include ("lib/base_datos.php");
+                    $idDonante=$_GET["id"];
+                    $conPDO=crear_conexion();
+                    seleccionar_bd_donaciones($conPDO);
+                    mostrar_donaciones($conPDO,$idDonante);
+                    $conPDO=null;
+                ?>
+            </tbody>
+        </table>
     </div>
 
     <footer>

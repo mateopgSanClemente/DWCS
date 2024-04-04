@@ -17,8 +17,8 @@
     <h1>Gestión donacion de Sangre</h1>
     <div>
         Listado de donantes
-        <table>
-            <thead>
+        <table class="table">
+            <thead class="thead-light">
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>

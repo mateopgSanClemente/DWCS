@@ -1,3 +1,19 @@
+<?php
+    if(isset($_GET["id"])){
+        $id=$_GET["id"];
+    }
+    if(isset($_POST["submit"])){
+        include ("lib/base_datos.php");
+        $idDonante=$_POST["id"];
+        $fechaDonacion=$_POST["fechaDonacion"];
+        $conPDO=crear_conexion();
+        seleccionar_bd_donaciones($conPDO);
+        registrar_donacion($conPDO,$idDonante,$fechaDonacion);
+        $conPDO=null;
+        header("Location: listar_donantes.php");
+        exit;
+    }
+?>
 <!doctype html>
 <html lang="en">
 
@@ -18,7 +34,12 @@
     <div>
         Formulario para dar de alta una donación
     </div>
-
+        <form action="donar.php" method="POST">
+            <label for="fechaDonacion">Fecha</label>
+            <input type="date" name="fechaDonacion" id="fechaDonacion" required>
+            <input type="submit" name="submit" id="submit" value="Donar">
+            <input type="hidden" name="id" value="<?= $id;?>">
+        </form>
     <footer>
         <p><a href='index.php'>Página de inicio</a></p>
     </footer>
