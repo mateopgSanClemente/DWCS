@@ -27,4 +27,17 @@ function contarVisitarCookie(){
         echo $_COOKIE["visitas"];
     }
 }
+
+function compruebaExtension(){
+    $carpetaFotografias="fotografias/";
+    $direccionFichero=$carpetaFotografias.basename($_FILES["fileToUpload"]["name"]);//basename() devuelve solo la ruta del archivo. $_FILES["fileToUpload"]["name"] devuelve el nombre original del archivo que se está cargando a través de un formulario HTML.
+    $tipoExtension=strtolower(pathinfo($direccionFichero, PATHINFO_EXTENSION));
+    if ($tipoExtension == "png" || $tipoExtension == "jpg" || $tipoExtension == "jpeg" || $tipoExtension == "gif"){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
 ?>
