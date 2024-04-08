@@ -99,6 +99,21 @@ function insertar_datos_tabla ($conPDO, $nombre, $apellido, $edad, $provincia){
         echo "Se produjo un error: " . $e->getMessage();
     }
 }
+function insertar_datos_producto($conPDO, $nombre, $descripcion, $precio, $unidades, $foto){
+    try{
+        $sql="INSERT INTO prductos (nombre, descripcion, precio, unidades, foto)
+        VALUE(:nombre, :descripcion, :precio, :unidades, :foto)";
+        $stmt=$conPDO->prepare($sql);
+        $stmt->bindParam(":nombre",$nombre);
+        $stmt->bindParam(":descripcion", $descripcion);
+        $stmt->bindParam(":precio", $precio);
+        $stmt->bindParam(":unidades", $unidades);
+        $stmt->bindParam(":foto", $foto);
+        $stmt->execute();
+    }catch(PDOException $e){
+        echo"Se produjo un error: ".$e->getMessage();
+    }
+}
 //SELECCIONAR DATOS
 function seleccionar_datos($conPDO){
     try{
