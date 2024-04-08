@@ -29,5 +29,10 @@
         </select>
         <input type="submit"name="submit" id="submit" value="Seleccionar idioma">
     </form>
+    <footer>
+        <p>
+            <a href='index.php'>Página de inicio</a>
+        </p>
+    </footer>
 </body>
 </html>

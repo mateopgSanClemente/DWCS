@@ -39,5 +39,12 @@ function compruebaExtension(){
     }
 }
 
-
+function comprobarTamanho(){
+    if($_FILES["fileToUpload"]["size"]>5000000){
+        echo"El fichero es demasiado grande, no puede superar los 50Mb.";
+        return false;
+    }else{
+        return true;
+    }
+}
 ?>

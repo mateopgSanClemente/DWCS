@@ -47,6 +47,7 @@
     </script>
     <?php
         crear_tabla_mysql($conPDO);
+        crear_bd_productos($conPDO);
         //Cerrar conexión
         cerrarConexion($conPDO);
         /* Desde el punto de vista profesional, no se incluyen buenas práctivas en el 
