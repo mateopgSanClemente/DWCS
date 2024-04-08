@@ -28,15 +28,24 @@ function contarVisitarCookie(){
     }
 }
 
-function compruebaExtension(){
+//Adaptar para que recoja paŕametros:
+function compruebaExtension($archivo){
     $carpetaFotografias="fotografias/";
-    $direccionFichero=$carpetaFotografias.basename($_FILES["fileToUpload"]["name"]);//basename() devuelve solo la ruta del archivo. $_FILES["fileToUpload"]["name"] devuelve el nombre original del archivo que se está cargando a través de un formulario HTML.
-    $tipoExtension=strtolower(pathinfo($direccionFichero, PATHINFO_EXTENSION));
-    if ($tipoExtension == "png" || $tipoExtension == "jpg" || $tipoExtension == "jpeg" || $tipoExtension == "gif"){
-        return true;
-    } else {
-        return false;
+    if(!is_array($archivo)){
+        $direccionFichero=$carpetaFotografias.basename($archivo["name"]);//basename() devuelve solo la ruta del archivo. $_FILES["fileToUpload"]["name"] devuelve el nombre original del archivo que se está cargando a través de un formulario HTML.
+        $tipoExtension=strtolower(pathinfo($direccionFichero, PATHINFO_EXTENSION));
+        return in_array($tipoExtension, array("png", "jpg", "jpeg", "gif"));
+    }else{
+        $comprobarArray=array();
+        foreach($archivo as $file){
+            $direccionFichero = $carpetaFotografias . basename($file["name"]);
+            $tipoExtension = strtolower(pathinfo($direccionFichero, PATHINFO_EXTENSION));
+            if(!in_array($tipoExtension, array("png", "jpg", "jpeg", "gif"))){
+                return false;
+            }
+        }
     }
+    return true;
 }
 
 function comprobarTamanho(){
