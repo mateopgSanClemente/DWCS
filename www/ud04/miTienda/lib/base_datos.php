@@ -49,7 +49,6 @@ function crear_bd_tienda($conPDO){
         echo $sql . "<br>" . $e->getMessage();
     }
 }
-
 //CAMBIAR DE BASE DE DATOS
 function cambiar_base_datos($conPDO, $baseDatos){
     $conexion->select_db($baseDatos);
@@ -71,8 +70,21 @@ function crear_tabla_mysql($conPDO){
         echo "Fallo en la conexión: " . $e->getMessage();
     }
 }
+function crear_bd_productos($conPDO){
+    try{
+        $sql="CREATE TABLE IF NOT EXISTS productos(
+            id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            nombre VARCHAR(50),
+            descripcion VARCHAR(100),
+            precio FLOAT,
+            unidades FLOAT,
+            foto BLOB);";
+        ejecutar_consulta($conPDO, $sql);
+    }catch(PDOException $e){
+        echo"Falla a la hora de crear la tabla 'productos': " . $e->getMessage();
+    }
+}
 
-//MODIFICARLO PARA QUE FUNCIONE COMO UN CONSULTA PREPARADA
 function insertar_datos_tabla ($conPDO, $nombre, $apellido, $edad, $provincia){
     try{
         $sql = "INSERT INTO Clientes (nombre, apellido, edad, provincia)
