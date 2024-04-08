@@ -23,7 +23,7 @@ session_destroy();
 //6.Crear cookies. El úncio parámetro obligatorio es $name
 setcookie($name, $value, $expire, $path, $domain, $secure, $httponly);
 //Ejemplo de cookie:
-setcookie("usuario", "Mateo", time()+(86400*30),"/")
+setcookie("usuario", "Mateo", time()+(86400*30),"/");
 //7.Recuperar el valor deuna cookie
 $_COOKIE["clave"];//Array asociativo que contiene la informacion que se le pasa al script via HTTP cookie
 //También se usa isset() para averiguar si la cookie está configurada
@@ -41,7 +41,7 @@ echo fread($miFichero, filesize("archivo.extension"));
 fclose($miFichero);
 //14.Lee una sola línea de un archivo:
 fgets($miFichero);
-//15.Comprueba si se ha alcanzado el finde archivo (EOF). Util para datos de long desconocida
+//15.Comprueba si se ha alcanzado el fin del archivo (EOF). Util para datos de long desconocida
 while(!feof($miFichero)){
     echo fgets($miFichero);
 }
@@ -74,7 +74,7 @@ md5($cadenaCaracteres);
 sha1($cadenaCaracteres);
 hash($algoritmo, $cadenaCaracteres);
 //27.Funciones de hashing recomendadas
-password_hash($password, $algoritmo, $opcione);//NO SE COMO FUNCIONA
+password_hash($password, $algoritmo, $opciones);//NO SE COMO FUNCIONA
 //28.Comprobar contraseña guardada
 password_verify($password, $hash);//Devuelve boolean
 ?>
