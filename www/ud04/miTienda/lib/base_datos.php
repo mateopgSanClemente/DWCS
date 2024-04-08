@@ -21,9 +21,6 @@ function get_conexion(){
         echo "Fallo en la conexión: " . $e->getMessage();
     }
 }
-
-
-
 //SELECCIONAR LA BASE DE DATOS
 function seleccionar_bd_tienda($conPDO){
     /*OJO!: Esta función está disponible para la extensión MySQLi, pero no para PDO
@@ -32,7 +29,6 @@ function seleccionar_bd_tienda($conPDO){
     $sql="USE tienda;";
     $conPDO->exec($sql);
 }
-
 //EJECUTAR CONSULTA
 function ejecutar_consulta($conPDO, $sql){
     try{
@@ -42,13 +38,12 @@ function ejecutar_consulta($conPDO, $sql){
         echo "Se produjo un error en la consulta: " . $e->getMessage();
     }
 }
-
 //CREAR UNA BASE DE DATOS 'TIENDA'
 function crear_bd_tienda($conPDO){
     try{
         //
         $sql = "CREATE DATABASE IF NOT EXISTS tienda";
-        //USAR exec() porque no se retornan datos ¿?
+        //USAR exec() porque no se retornan datos ¿?--> Usar exec() cuando no se usan consultas preparadas.
         ejecutar_consulta($conPDO, $sql);
     }catch(PDOException $e){
         echo $sql . "<br>" . $e->getMessage();
@@ -76,19 +71,22 @@ function crear_tabla_mysql($conPDO){
         echo "Fallo en la conexión: " . $e->getMessage();
     }
 }
-//INSERTAR DATOS EN LA TABLA. HACER QUE MUESTRE TAMBIÉN EL ÚLTIMO ID!
-//ESTA FUNCIÓN TENGO QUE MODIFICARLA PARA QUE RECOJA LA INFORMACIÓN DEL FOMRULARIO!!
+
 //MODIFICARLO PARA QUE FUNCIONE COMO UN CONSULTA PREPARADA
 function insertar_datos_tabla ($conPDO, $nombre, $apellido, $edad, $provincia){
     try{
         $sql = "INSERT INTO Clientes (nombre, apellido, edad, provincia)
-        VALUES ('$nombre', '$apellido', '$edad', '$provincia')";
-        ejecutar_consulta($conPDO, $sql);
+        VALUES (:nombre, :apellido, :edad, :provincia)";
+        $stmt=$conPDO->prepare($sql);
+        $stmt->bindParam(":nombre",$nombre);
+        $stmt->bindParam(":apellido",$apellido);
+        $stmt->bindParam(":edad",$edad);
+        $stmt->bindParam(":provincia",$provincia);
+        $stmt->execute();
     } catch(PDOException $e){
         echo "Se produjo un error: " . $e->getMessage();
     }
 }
-
 //SELECCIONAR DATOS
 function seleccionar_datos($conPDO){
     try{
@@ -105,31 +103,22 @@ function seleccionar_datos($conPDO){
     }
 }
 
-//CONSULTAR TABLA
-function consultar_tabla_tienda($conPDO){
-    try{
-    $sql="SELECT * FROM tienda";
-    $consulta = ejecutar_consulta($conPDO, $sql);
-    }catch(PDOException $e){
-        echo"Se produjo un error en la consulta de los datos: " . $e->getMessage();
-    }
-}
-
 function consulta($conPDO){
     //Preparar consulta
     $sql = "SELECT * FROM Clientes";
     try{
-    $stmt = $conPDO->prepare($sql);
-    //Ejecutar consulta
-    $stmt->execute();
-    //Obtiene los resultados como un array asociativo
-    $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    return $clientes;
+        $sql = "SELECT * FROM Clientes";
+        $stmt = $conPDO->prepare($sql);
+        //Ejecutar consulta
+        $stmt->execute();
+        //Obtiene los resultados como un array asociativo
+        $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $clientes;
     }catch(PDOExceptio $e){
         echo"Error al ejecutar la consulta: " . $e->getMessage();
     }
-    $stmt=null;
 }
+
 function consulta_alternativa($conPDO){
     //Preparar consulta
     $sql="SELECT * FROM Clientes";
@@ -160,7 +149,7 @@ function consulta_id($conPDO, $id){
     $cliente = $stmt->fetchAll(PDO::FETCH_ASSOC);//Crea array asociativo
     $stmt=null;
     return $cliente;
-}
+} 
 //EDITAR ELEMENTO TABLA CLIENTES
 function editar_cliente($conPDO, $id, $nombre, $apellidos, $edad, $provincia){
     $sql="UPDATE Clientes SET nombre=?, apellido=?, edad=?, provincia=? WHERE id=?";
@@ -178,3 +167,6 @@ function cerrarConexion ($conPDO){
     //CERRAR CONEXIÓN A LA BASE DATOS
     $conPDO = null;
 }
+
+//FUNCIONES TEMA 4. No tiene ningún sentido que convierta funciones en funciones
+

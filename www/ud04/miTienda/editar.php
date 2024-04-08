@@ -1,4 +1,11 @@
 <?php
+    if(!isset($_COOKIE["visitas"])){
+        setcookie("visitas", 0, time()+(86400*30), "/");
+    }else{
+        $_COOKIE["visitas"]++;
+        setcookie("visitas", $_COOKIE["visitas"], time()+(86400*30),"/");
+    }
+    echo "Visitas totales: ".$_COOKIE["visitas"]."<br>";
     include ("lib/base_datos.php");
     if($_SERVER["REQUEST_METHOD"]=="POST" && isset($_POST["submit"])){
         $conPDO=get_conexion();

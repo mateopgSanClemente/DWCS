@@ -1,3 +1,33 @@
+<?php
+    include("lib/base_datos.php");
+    if(!isset($_COOKIE["visitas"])){
+        setcookie("visitas", 0, time()+(86400*30), "/");
+    }else{
+        $_COOKIE["visitas"]++;
+        setcookie("visitas", $_COOKIE["visitas"], time()+(86400*30),"/");
+    }
+    echo "Visitas totales: ".$_COOKIE["visitas"]."<br>";
+    /*
+    session_start();
+    if(!isset($_SESSION["count"])){
+        $_SESSION["count"]=0;
+    }else{
+        $_SESSION["count"]++;
+    }
+    echo $_SESSION["count"];*/
+    //Para hacerlo con cookies (escoger hacerlo mediante cookies o session, las dos al mismo tiempo no funcionan):
+    
+    
+    //También podría utilizar un require
+    
+    //MEDIANTE PDO:
+    //Crear la conexion
+    $conPDO = get_conexion();
+    //Crear la base de datos
+    crear_bd_tienda($conPDO);
+    //Seleccionar bd tienda:
+    seleccionar_bd_tienda($conPDO);
+?>
 <!doctype html>
 <html lang="en">
 
@@ -16,16 +46,6 @@
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
     </script>
     <?php
-    //También podría utilizar un require
-        include("lib/base_datos.php");
-        //MEDIANTE PDO:
-        //Crear la conexion
-        $conPDO = get_conexion();
-        //Crear la base de datos
-        crear_bd_tienda($conPDO);
-        //Seleccionar bd tienda:
-        seleccionar_bd_tienda($conPDO);
-        //Crear tabla cliente
         crear_tabla_mysql($conPDO);
         //Cerrar conexión
         cerrarConexion($conPDO);
