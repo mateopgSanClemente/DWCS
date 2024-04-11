@@ -29,6 +29,7 @@ function seleccionar_bd_tienda($conPDO){
     $sql="USE tienda;";
     $conPDO->exec($sql);
 }
+
 //EJECUTAR CONSULTA
 function ejecutar_consulta($conPDO, $sql){
     try{
@@ -101,7 +102,7 @@ function insertar_datos_tabla ($conPDO, $nombre, $apellido, $edad, $provincia){
 }
 function insertar_datos_producto($conPDO, $nombre, $descripcion, $precio, $unidades, $foto){
     try{
-        $sql="INSERT INTO prductos (nombre, descripcion, precio, unidades, foto)
+        $sql="INSERT INTO productos (nombre, descripcion, precio, unidades, foto)
         VALUE(:nombre, :descripcion, :precio, :unidades, :foto)";
         $stmt=$conPDO->prepare($sql);
         $stmt->bindParam(":nombre",$nombre);

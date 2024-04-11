@@ -29,40 +29,44 @@ function contarVisitarCookie(){
 }
 
 //Adaptar para que recoja paŕametros:
-function compruebaExtension($archivo){
-    $carpetaFotografias="fotografias/";
-    if(!is_array($archivo)){
-        $direccionFichero=$carpetaFotografias.basename($archivo["name"]);//basename() devuelve solo la ruta del archivo. $_FILES["fileToUpload"]["name"] devuelve el nombre original del archivo que se está cargando a través de un formulario HTML.
+/**
+ * No me gusta como está llevada la lógica de la función,d
+ */
+function comprobarExtension($archivo, $directorioArchivo){
+    if(is_string($archivo)){
+        $direccionFichero=$directorioArchivo.basename($archivo["name"]);//basename() devuelve solo la ruta del archivo. $_FILES["fileToUpload"]["name"] devuelve el nombre original del archivo que se está cargando a través de un formulario HTML.
         $tipoExtension=strtolower(pathinfo($direccionFichero, PATHINFO_EXTENSION));
         return in_array($tipoExtension, array("png", "jpg", "jpeg", "gif"));
-    }else{
-        $comprobarArray=array();
+    }elseif(is_array($archivo)){
         foreach($archivo as $file){
-            $direccionFichero = $carpetaFotografias . basename($file["name"]);
+            $direccionFichero = $directorioArchivo . basename($file);
             $tipoExtension = strtolower(pathinfo($direccionFichero, PATHINFO_EXTENSION));
             if(!in_array($tipoExtension, array("png", "jpg", "jpeg", "gif"))){
                 return false;
             }
         }
+        return true;
     }
-    return true;
+    return false;
 }
 
-function comprobarTamanho($fichero){
-    if(!is_array($fichero)){
-        if($fichero["size"]>50000000){
+//En mi caso $fichero debe ser igual a '$_FILES["fileToUpload"]'
+function comprobarTamanho($tamanhoArchivo){
+    if(is_int($tamanhoArchivo)){
+        if($tamanhoArchivo>50000000){
             echo"El fichero es demasiado grande, no puede superar los 50Mb.";
             return false;
         }else{
             return true;
         }
-    }else{
-        foreach($fichero as $file){
-            if($file["size"]>50000000){
+    }elseif(is_array($tamanhoArchivo)){
+        foreach($tamanhoArchivo as $file){
+            if($file>50000000){
+                echo"Uno de los ficheros es demasiado grande, no puede superar los 50Mb.";
                 return false;
             }
         }
-    }
-    return true;
+        return true;
+    }  
 }
 ?>
