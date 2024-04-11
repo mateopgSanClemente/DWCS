@@ -35,7 +35,7 @@
             $provincia=test_input($_POST["provincia"]);
             //Recoger y cifrar contraseña: la contraseña cifrada debe tener un máximo de 50 caracteres, así que aunque no sea lo ideal, voy a usar cifrado 
             $password = test_input($_POST["password"]);
-            $passwordCifrada = sha1($password);
+            $passwordCifrada = password_hash($password, PASSWORD_BCRYPT);
             if(!empty($nombre) && !empty($apellidos) && !empty($edad) && !empty($provincia) && !empty($password)){
                 insertar_datos_tabla($conPDO, $nombre, $passwordCifrada, $apellidos, $edad, $provincia);
             }

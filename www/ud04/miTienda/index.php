@@ -61,6 +61,7 @@
         <a class="btn btn-primary" href="dar_de_alta_producto.php" role="button"> Alta producto</a>
         <a class="btn btn-primary" href="listar.php" role="button"> Listar usuarios</a>
         <a class="btn btn-primary" href="idioma.php" role="button"> Seleccionar idioma</a>
+        <a class="btn btn-primary" href="login.php" role="button"> Login</a>
     </p>
     <footer>
         <p>

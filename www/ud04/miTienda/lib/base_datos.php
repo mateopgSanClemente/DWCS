@@ -57,7 +57,7 @@ function crear_tabla_mysql($conPDO){
         $sql="CREATE TABLE IF NOT EXISTS usuarios (
             id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
             nombre VARCHAR(50) NOT NULL,
-            password VARCHAR(50),
+            password VARCHAR(150),
             apellido VARCHAR(100),
             edad INT NOT NULL,
             provincia VARCHAR(50)
@@ -82,26 +82,17 @@ function crear_tabla_productos($conPDO){
     }
 }
 
-function crear_tabla_usuarios ($conPDO){
-    $sql="CREATE TABLE IF NOT EXISTS usuarios(
-        id INT UNSIGNE AUTO_INCREMENT PRIMARY KEY,
-        nombre VARCHAR(50),
-        password VARCHAR(50),
-        apellidos VARCHAR(100),
-        edad INT,
-        provincia VARCHAR(50)
-        );";
-}
 
-function insertar_datos_tabla ($conPDO, $nombre, $apellido, $edad, $provincia){
+function insertar_datos_tabla ($conPDO, $nombre, $password, $apellido, $edad, $provincia){
     try{
-        $sql = "INSERT INTO usuarios (nombre, apellido, edad, provincia)
-        VALUES (:nombre, :apellido, :edad, :provincia)";
+        $sql = "INSERT INTO usuarios (nombre, password, apellido, edad, provincia)
+        VALUES (:nombre, :password, :apellido, :edad, :provincia)";
         $stmt=$conPDO->prepare($sql);
-        $stmt->bindParam(":nombre",$nombre);
-        $stmt->bindParam(":apellido",$apellido);
-        $stmt->bindParam(":edad",$edad);
-        $stmt->bindParam(":provincia",$provincia);
+        $stmt->bindParam(":nombre", $nombre);
+        $stmt->bindParam(":password", $password);
+        $stmt->bindParam(":apellido", $apellido);
+        $stmt->bindParam(":edad", $edad);
+        $stmt->bindParam(":provincia", $provincia);
         $stmt->execute();
     } catch(PDOException $e){
         echo "Se produjo un error: " . $e->getMessage();
@@ -211,6 +202,15 @@ function borrar_datos($conPDO, $id){
 function cerrarConexion ($conPDO){
     //CERRAR CONEXIÓN A LA BASE DATOS
     $conPDO = null;
+}
+
+function recuperarPassword($conPDO, $nombreUsuario){
+    $sql = "SELECT password FROM usuarios WHERE nombre=?;";
+    $stmt = $conPDO->prepare($sql);
+    $stmt->execute([$nombreUsuario]);
+    $password = $stmt->fetchColumn();
+    cerrarConexion($conPDO);
+    return $password;
 }
 
 //FUNCIONES TEMA 4. No tiene ningún sentido que convierta funciones en funciones
