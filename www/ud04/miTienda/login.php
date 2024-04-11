@@ -1,6 +1,7 @@
 <?php
 require "lib/base_datos.php";
 require "lib/utilidades.php";
+session_start();
     if(!empty($_POST)){
         $conPDO = get_conexion();
         seleccionar_bd_tienda($conPDO);
@@ -9,7 +10,9 @@ require "lib/utilidades.php";
         $passwordAlmacenada = recuperarPassword($conPDO, $usuario);
         $verificarPassword = password_verify($password, $passwordAlmacenada);
         if($verificarPassword){
+            $_SESSION["usuario"] = $usuario;
             header("Location: index.php");
+            exit;
         }else{
             echo "PASSWORD INCORRECTO";
         }
