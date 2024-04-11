@@ -54,9 +54,10 @@ function cambiar_base_datos($conPDO, $baseDatos){
 
 function crear_tabla_mysql($conPDO){
     try{
-        $sql="CREATE TABLE IF NOT EXISTS Clientes (
+        $sql="CREATE TABLE IF NOT EXISTS usuarios (
             id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
             nombre VARCHAR(50) NOT NULL,
+            password VARCHAR(50),
             apellido VARCHAR(100),
             edad INT NOT NULL,
             provincia VARCHAR(50)
@@ -66,7 +67,7 @@ function crear_tabla_mysql($conPDO){
         echo "Fallo en la conexión: " . $e->getMessage();
     }
 }
-function crear_bd_productos($conPDO){
+function crear_tabla_productos($conPDO){
     try{
         $sql="CREATE TABLE IF NOT EXISTS productos(
             id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -81,9 +82,20 @@ function crear_bd_productos($conPDO){
     }
 }
 
+function crear_tabla_usuarios ($conPDO){
+    $sql="CREATE TABLE IF NOT EXISTS usuarios(
+        id INT UNSIGNE AUTO_INCREMENT PRIMARY KEY,
+        nombre VARCHAR(50),
+        password VARCHAR(50),
+        apellidos VARCHAR(100),
+        edad INT,
+        provincia VARCHAR(50)
+        );";
+}
+
 function insertar_datos_tabla ($conPDO, $nombre, $apellido, $edad, $provincia){
     try{
-        $sql = "INSERT INTO Clientes (nombre, apellido, edad, provincia)
+        $sql = "INSERT INTO usuarios (nombre, apellido, edad, provincia)
         VALUES (:nombre, :apellido, :edad, :provincia)";
         $stmt=$conPDO->prepare($sql);
         $stmt->bindParam(":nombre",$nombre);
@@ -145,7 +157,7 @@ function seleccionar_datos($conPDO){
 
 function consulta($conPDO){
     try{
-        $sql = "SELECT * FROM Clientes";
+        $sql = "SELECT * FROM usuarios";
         $stmt = $conPDO->prepare($sql);
         $stmt->execute();
         //Obtiene los resultados como un array asociativo
@@ -157,7 +169,7 @@ function consulta($conPDO){
 }
 
 function consulta_alternativa($conPDO){
-    $sql="SELECT * FROM Clientes";
+    $sql="SELECT * FROM usuarios";
     try{
         //Se realiza la consulta a través del método query().
         $stmt=$conPDO->query($sql);
@@ -177,7 +189,7 @@ function consulta_alternativa($conPDO){
     }
 }
 function consulta_id($conPDO, $id){
-    $sql="SELECT * FROM Clientes WHERE id=?";
+    $sql="SELECT * FROM usuarios WHERE id=?";
     $stmt=$conPDO->prepare($sql);
     $stmt->execute([$id]);//Devuelve un booleando
     $cliente = $stmt->fetchAll(PDO::FETCH_ASSOC);//Crea array asociativo
@@ -185,13 +197,13 @@ function consulta_id($conPDO, $id){
 } 
 
 function editar_cliente($conPDO, $id, $nombre, $apellidos, $edad, $provincia){
-    $sql="UPDATE Clientes SET nombre=?, apellido=?, edad=?, provincia=? WHERE id=?";
+    $sql="UPDATE usuarios SET nombre=?, apellido=?, edad=?, provincia=? WHERE id=?";
     $stmt=$conPDO->prepare($sql);
     $stmt->execute([$nombre, $apellidos, $edad, $provincia, $id]);
 }
 
 function borrar_datos($conPDO, $id){
-    $sql="DELETE FROM Clientes WHERE id=$id";
+    $sql="DELETE FROM usuarios WHERE id=$id";
     $conPDO->exec($sql);
     $conPDO=null;
 }
