@@ -29,13 +29,15 @@
             $conPDO=get_conexion();
             //Seleccionar bd
             seleccionar_bd_tienda($conPDO);
-            //Executar o INSERT con cada elemento que se pasa a través del POST
             $nombre=test_input($_POST["nombre"]);
             $apellidos=test_input($_POST["apellidos"]);
             $edad=test_input($_POST["edad"]);
             $provincia=test_input($_POST["provincia"]);
-            if(!empty($nombre) && !empty($apellidos) && !empty($edad) && !empty($provincia)){
-                insertar_datos_tabla($conPDO, $nombre, $apellidos, $edad, $provincia);
+            //Recoger y cifrar contraseña: la contraseña cifrada debe tener un máximo de 50 caracteres, así que aunque no sea lo ideal, voy a usar cifrado 
+            $password = test_input($_POST["password"]);
+            $passwordCifrada = sha1($password);
+            if(!empty($nombre) && !empty($apellidos) && !empty($edad) && !empty($provincia) && !empty($password)){
+                insertar_datos_tabla($conPDO, $nombre, $passwordCifrada, $apellidos, $edad, $provincia);
             }
             //Cerrar conexión
             cerrarConexion($conPDO);
@@ -49,13 +51,19 @@
 
     <p>Formulario de alta</p>
     <!-- o "action" chama a dar_de_alta.php de xeito reflexivo-->
-    <form action="dar_de_alta.php" method="POST">
+    <form action="<?php echo test_input($_SERVER["PHP_SELF"])?>" method="POST"> <!--También podría utilizar $_SERVER["PHP_SELF"] para hacer referencia a la misma página dar_de_alta.php-->
         <label for="nombre">Nombre:</label>
         <input type="text" name="nombre" id="nombre" requiered>
+        <br><br>
         <label for="apellidos">Apellidos:</label>
         <input type="text" name="apellidos" id="apellidos" required>
+        <br><br>
+        <label for="password">Contraseña:</label>
+        <input type="password" name="password" id="password" required>
+        <br><br>
         <label for="edad">Edad:</label>
         <input type="number" name="edad" id="edad" min="0" max="120" step="1" required>
+        <br><br>
         <label for="provincia">Provincia:</label>
         <select name="provincia" id="provincia" required>
             <option value="pontevedra">Pontevedra</option>
@@ -63,6 +71,7 @@
             <option value="corunha">Coruña</option>
             <option value="lugo">Lugo</option>
         </select>
+        <br><br>
         <input type="submit" name="submit" value="Dar de alta">
     </form>
     <footer>
