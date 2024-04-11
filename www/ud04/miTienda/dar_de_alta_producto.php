@@ -7,7 +7,7 @@ $nombreProducto="";
 $descripcionProducto="";
 $precioProducto=0;
 $cantidadProducto=0;
-$fotoProducto="";
+$nombreFoto="";
 $rutaDirectorioFotos="fotografias/";
 if($_SERVER["REQUEST_METHOD"]=="POST" && isset($_POST["submit"]) && count($_FILES["fileToUpload"]["name"])>0){
     /**
@@ -21,6 +21,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST" && isset($_POST["submit"]) && count($_FILE
     $precioProducto = floatval($precioProducto);
     $cantidadProducto = floatval($cantidadProducto);
     $nombreFoto=$_FILES["fileToUpload"]["name"];
+    $nombreTemporal=$_FILES["fileToUpload"]["tmp_name"];
     $tamanhoFoto=$_FILES["fileToUpload"]["size"];
     $validarNombre;
     $validarDescripcion;
@@ -28,6 +29,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST" && isset($_POST["submit"]) && count($_FILE
     $validarCantidad;
     $validarFoto=comprobarExtension($nombreFoto, $rutaDirectorioFotos);
     $validarTamanho=comprobarTamanho($tamanhoFoto);
+    $validarSubidaFoto=false;
     if(!empty($nombreProducto) && is_string($nombreProducto) && strlen($nombreProducto)<=50){
         $nombreProducto=test_input($nombreProducto);
         $validarNombre=true;
@@ -45,7 +47,6 @@ if($_SERVER["REQUEST_METHOD"]=="POST" && isset($_POST["submit"]) && count($_FILE
     }
 
     if(!empty($precioProducto) && is_float($precioProducto)){
-        //CREO QUE ESTA PARTE NO ES NECESARIA!
         $precioProducto=number_format($precioProducto, 2);
         $validarPrecio=true;
     }else{
@@ -60,13 +61,13 @@ if($_SERVER["REQUEST_METHOD"]=="POST" && isset($_POST["submit"]) && count($_FILE
         $validarCantidad=false;
     }
     //CORREGIR: Mostar el mensaje cuando alguna de las validaciones falla
-    if(!$validarFoto && !$validarTamanho){
-        echo"Es necesario subir un fichero con un formato válido.";
+    if($validarFoto && $validarTamanho){
+        $validarSubidaFoto = subirArchivo($nombreFoto, $nombreTemporal);
     }
-    if ($validarNombre && $validarDescripcion && $validarPrecio && $validarCantidad && $validarFoto && $validarTamanho){
+    if ($validarNombre && $validarDescripcion && $validarPrecio && $validarCantidad && $validarSubidaFoto){
         $conPDO = get_conexion();
         seleccionar_bd_tienda($conPDO);
-        insertar_datos_producto($conPDO, $nombreProducto, $descripcionProducto, $precioProducto, $cantidadProducto, $fotoProducto);
+        insertar_datos_producto($conPDO, $nombreProducto, $descripcionProducto, $precioProducto, $cantidadProducto, $nombreFoto);
     }
 
 }
@@ -97,5 +98,8 @@ if($_SERVER["REQUEST_METHOD"]=="POST" && isset($_POST["submit"]) && count($_FILE
         <input type="file" name="fileToUpload[]" id="fileToUpload" value="Subir archivo" multiple>
         <input type="submit" name="submit" id="submit" value="Subir producto">
     </form>
+    <footer>
+        <a href="index.php">Página de inicio</a>
+    </footer>
 </body>
 </html>

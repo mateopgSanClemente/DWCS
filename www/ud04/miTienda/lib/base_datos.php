@@ -30,7 +30,6 @@ function seleccionar_bd_tienda($conPDO){
     $conPDO->exec($sql);
 }
 
-//EJECUTAR CONSULTA
 function ejecutar_consulta($conPDO, $sql){
     try{
     $resultado = $conPDO->exec($sql);
@@ -39,10 +38,8 @@ function ejecutar_consulta($conPDO, $sql){
         echo "Se produjo un error en la consulta: " . $e->getMessage();
     }
 }
-//CREAR UNA BASE DE DATOS 'TIENDA'
 function crear_bd_tienda($conPDO){
     try{
-        //
         $sql = "CREATE DATABASE IF NOT EXISTS tienda";
         //USAR exec() porque no se retornan datos ¿?--> Usar exec() cuando no se usan consultas preparadas.
         ejecutar_consulta($conPDO, $sql);
@@ -50,12 +47,11 @@ function crear_bd_tienda($conPDO){
         echo $sql . "<br>" . $e->getMessage();
     }
 }
-//CAMBIAR DE BASE DE DATOS
+
 function cambiar_base_datos($conPDO, $baseDatos){
     $conexion->select_db($baseDatos);
 }
 
-//CREAR UNA TABLA MYSQL
 function crear_tabla_mysql($conPDO){
     try{
         $sql="CREATE TABLE IF NOT EXISTS Clientes (
@@ -65,7 +61,6 @@ function crear_tabla_mysql($conPDO){
             edad INT NOT NULL,
             provincia VARCHAR(50)
             );";
-        //SE EJECUTA LA SENTENCIA SQL
         ejecutar_consulta($conPDO,$sql);
     }catch(PDOException $e){
         echo "Fallo en la conexión: " . $e->getMessage();
@@ -100,25 +95,42 @@ function insertar_datos_tabla ($conPDO, $nombre, $apellido, $edad, $provincia){
         echo "Se produjo un error: " . $e->getMessage();
     }
 }
-function insertar_datos_producto($conPDO, $nombre, $descripcion, $precio, $unidades, $foto){
+function insertar_datos_producto($conPDO, $nombre, $descripcion, $precio, $unidades, $nombreArchivo, $targetDir = "fotografias/"){
     try{
-        $sql="INSERT INTO productos (nombre, descripcion, precio, unidades, foto)
-        VALUE(:nombre, :descripcion, :precio, :unidades, :foto)";
-        $stmt=$conPDO->prepare($sql);
-        $stmt->bindParam(":nombre",$nombre);
-        $stmt->bindParam(":descripcion", $descripcion);
-        $stmt->bindParam(":precio", $precio);
-        $stmt->bindParam(":unidades", $unidades);
-        $stmt->bindParam(":foto", $foto);
-        $stmt->execute();
+        if (is_array($nombreArchivo)){
+            foreach($nombreArchivo as $file){
+                $targetFile = $targetDir . basename($file);
+                $contenidoArchivo = addslashes(file_get_contents($targetFile));
+                $sql="INSERT INTO productos (nombre, descripcion, precio, unidades, foto)
+                VALUE(:nombre, :descripcion, :precio, :unidades, :foto)";
+                $stmt=$conPDO->prepare($sql);
+                $stmt->bindParam(":nombre",$nombre);
+                $stmt->bindParam(":descripcion", $descripcion);
+                $stmt->bindParam(":precio", $precio);
+                $stmt->bindParam(":unidades", $unidades);
+                $stmt->bindParam(":foto", $contenidoArchivo);
+                $stmt->execute();
+            }
+        } elseif (is_string($nombreArchivo)){          
+            $targetFile = $targetDir . basename($nombreArchivo);
+            $contenidoArchivo = addslashes(file_get_contents($targetFile));
+            $sql="INSERT INTO productos (nombre, descripcion, precio, unidades, foto)
+            VALUE(:nombre, :descripcion, :precio, :unidades, :foto)";
+            $stmt=$conPDO->prepare($sql);
+            $stmt->bindParam(":nombre",$nombre);
+            $stmt->bindParam(":descripcion", $descripcion);
+            $stmt->bindParam(":precio", $precio);
+            $stmt->bindParam(":unidades", $unidades);
+            $stmt->bindParam(":foto", $contenidoArchivo);
+            $stmt->execute();
+            $stmt->close();
+        }
     }catch(PDOException $e){
         echo"Se produjo un error: ".$e->getMessage();
     }
 }
-//SELECCIONAR DATOS
 function seleccionar_datos($conPDO){
     try{
-        //Preparar el select
         $stmt = $conPDO->prepare("SELECT id, nombre, apellido, edad, provincia FROM Usuarios");
         $stmt->execute();
         //CONVERTIR EL RESULTADO EN UN ARRAY MULTIDIMENSIONAL ASOCIATIVO
@@ -132,12 +144,9 @@ function seleccionar_datos($conPDO){
 }
 
 function consulta($conPDO){
-    //Preparar consulta
-    $sql = "SELECT * FROM Clientes";
     try{
         $sql = "SELECT * FROM Clientes";
         $stmt = $conPDO->prepare($sql);
-        //Ejecutar consulta
         $stmt->execute();
         //Obtiene los resultados como un array asociativo
         $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -148,7 +157,6 @@ function consulta($conPDO){
 }
 
 function consulta_alternativa($conPDO){
-    //Preparar consulta
     $sql="SELECT * FROM Clientes";
     try{
         //Se realiza la consulta a través del método query().
@@ -162,10 +170,8 @@ function consulta_alternativa($conPDO){
             }
             echo"<td><a href=\"editar.php?id=".$fila["id"]."\">Editar</a></td>";
             echo"<td><a href=\"borrar.php?id=".$fila["id"]."\">Borrar</a></td>";
-            echo"</tr>";
-            
+            echo"</tr>";        
         }
-        $stmt=null;
     }catch(PDOException $e){
         echo"Se produjo un error en la consulta:".$e->getMessage()."<br>";
     }
@@ -175,22 +181,21 @@ function consulta_id($conPDO, $id){
     $stmt=$conPDO->prepare($sql);
     $stmt->execute([$id]);//Devuelve un booleando
     $cliente = $stmt->fetchAll(PDO::FETCH_ASSOC);//Crea array asociativo
-    $stmt=null;
     return $cliente;
 } 
-//EDITAR ELEMENTO TABLA CLIENTES
+
 function editar_cliente($conPDO, $id, $nombre, $apellidos, $edad, $provincia){
     $sql="UPDATE Clientes SET nombre=?, apellido=?, edad=?, provincia=? WHERE id=?";
     $stmt=$conPDO->prepare($sql);
     $stmt->execute([$nombre, $apellidos, $edad, $provincia, $id]);
 }
-//BORRAR ELEMENTO TABLA CLIENTES
+
 function borrar_datos($conPDO, $id){
     $sql="DELETE FROM Clientes WHERE id=$id";
     $conPDO->exec($sql);
     $conPDO=null;
 }
-//CERRAR LA CONEXIÓN
+
 function cerrarConexion ($conPDO){
     //CERRAR CONEXIÓN A LA BASE DATOS
     $conPDO = null;
