@@ -1,20 +1,42 @@
 <?php
 require "lib/base_datos.php";
 require "lib/utilidades.php";
+$usuario = "";
+$password = "";
+//PROBLEMA: El código no funciona si un nombre de usuario está repetido en la tabla usuarios.
 session_start();
     if(!empty($_POST)){
         $conPDO = get_conexion();
         seleccionar_bd_tienda($conPDO);
-        $usuario = $_POST["usuario"];
-        $password = $_POST["password"];
+        $validarUsuario = false;
+        $validarPassword = false;
+
+        if (is_string($_POST["usuario"])){
+            $usuario = $_POST["usuario"];
+            $comprobarUsuario = comprobarUsuario($conPDO, $usuario);
+            if ($comprobarUsuario > 0){
+                $validarUsuario = true;
+            } else {
+                echo "El nombre introducido no existe en la base de datos.";
+            }
+        } else {
+            echo "<br>El nombre introducido no es válido.";
+        }
+        if (is_string($_POST["password"])){
+            $password = $_POST["password"];
+            $validarPassword = true;
+        } else {
+            echo "<br>La contraseña introducida no es válida.";
+        }
+
         $passwordAlmacenada = recuperarPassword($conPDO, $usuario);
         $verificarPassword = password_verify($password, $passwordAlmacenada);
-        if($verificarPassword){
+        if($verificarPassword && $validarPassword && $validarUsuario){
             $_SESSION["usuario"] = $usuario;
             header("Location: index.php");
             exit;
         }else{
-            echo "PASSWORD INCORRECTO";
+            echo "<br>PASSWORD INCORRECTO";
         }
     }
 ?>

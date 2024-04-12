@@ -213,5 +213,14 @@ function recuperarPassword($conPDO, $nombreUsuario){
     return $password;
 }
 
+function comprobarUsuario ($conPDO, $nombreUsuario){
+    $sql = "SELECT COUNT(*) as total FROM usuarios WHERE nombre = :usuario";
+    $stmt = $conPDO->prepare($sql);
+    $stmt->bindParam(":usuario", $nombreUsuario);
+    $stmt->execute();
+    $resultado=$stmt->fetch(PDO::FETCH_COLUMN); 
+    return $resultado;
+}
+
 //FUNCIONES TEMA 4. No tiene ningún sentido que convierta funciones en funciones
 
