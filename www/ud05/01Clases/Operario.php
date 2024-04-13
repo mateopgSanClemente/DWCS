@@ -1,4 +1,5 @@
 <?php
+require_once "Empleado.php";
 class Operario extends Empleado {
     private $turno;
     
@@ -8,10 +9,13 @@ class Operario extends Empleado {
     }
 
     public function setTurno($turno){
-        if($turno === "diurno" || $turno === "nocturno"){
-            $this->turno = $turno;
-        } else {
-            echo "El valor introducido para el turno no es correcto, solo admite los valores 'diurno' o 'nocturno'.";
+        if(is_string($turno)){
+            $turno = strtolower($turno);
+            if($turno === "diurno" || $turno === "nocturno"){
+                $this->turno = $turno;
+            } else {
+                echo "El valor introducido para el turno no es correcto, solo admite los valores 'diurno' o 'nocturno'.";
+            }
         }
     }
 }

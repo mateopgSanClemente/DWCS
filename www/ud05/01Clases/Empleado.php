@@ -17,7 +17,7 @@ class Empleado {
     }
 
     public function __construct($nombre, $salario){
-        if($salario <= 20000){
+        if($salario <= 2000){
             $this->nombre = $nombre;
             $this->salario = $salario;
             self::$numEmpleado++;
