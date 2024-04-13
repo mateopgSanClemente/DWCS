@@ -12,6 +12,10 @@ class Empleado {
         return $this->nombre;
     }
 
+    public function getSalario(){
+        return $this->salario;
+    }
+
     //1. Aumentar en 1 el valor de $numEmpleado cada vez que se cree un objeto de la clase Empleado
 
     public function __construct($nombre, $salario){
