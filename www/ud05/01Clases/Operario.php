@@ -4,11 +4,11 @@ class Operario extends Empleado {
     
     public function __construct($nombre, $salario, $turno){
         parent::__construct($nombre, $salario);
-        $this->turno =$turno;
+        $this->setTurno($turno);
     }
 
     public function setTurno($turno){
-        if($turno === "diurno" || $turno || "nocturno"){
+        if($turno === "diurno" || $turno === "nocturno"){
             $this->turno = $turno;
         } else {
             echo "El valor introducido para el turno no es correcto, solo admite los valores 'diurno' o 'nocturno'.";
