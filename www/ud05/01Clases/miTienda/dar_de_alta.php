@@ -21,8 +21,9 @@
 <body>
     <h1>Alta de usuario </h1>
     <?php
-        include ("lib/base_datos.php");
-        include ("lib/utilidades.php");
+        require_once ("lib/base_datos.php");
+        require_once ("lib/utilidades.php");
+        require_once ("Usuario.php");
         //Comprobar se veñen datos polo $_POST OJO!-> Solo si llegaron datos vía POST
         if(!empty($_POST)){
             //Conexión
@@ -35,9 +36,10 @@
             $provincia=test_input($_POST["provincia"]);
             //Recoger y cifrar contraseña: la contraseña cifrada debe tener un máximo de 50 caracteres, así que aunque no sea lo ideal, voy a usar cifrado 
             $password = test_input($_POST["password"]);
-            $passwordCifrada = password_hash($password, PASSWORD_BCRYPT);
-            if(!empty($nombre) && !empty($apellidos) && !empty($edad) && !empty($provincia) && !empty($password)){
-                insertar_datos_tabla($conPDO, $nombre, $passwordCifrada, $apellidos, $edad, $provincia);
+            $usuario = new Usuario($nombre, $apellidos, $edad, $provincia, $password);
+            $passwordCifrada = password_hash($usuario->getPassword(), PASSWORD_BCRYPT);
+            if(!empty($usuario->getNombre()) && !empty($usuario->getApellidos()) && !empty($usuario->getEdad()) && !empty($usuario->getProvincia()) && !empty($usuario->getPassword())){
+                insertar_datos_tabla($conPDO, $usuario->getNombre(), $passwordCifrada, $usuario->getApellidos(), $usuario->getEdad(), $usuario->getProvincia());
             }
             //Cerrar conexión
             cerrarConexion($conPDO);

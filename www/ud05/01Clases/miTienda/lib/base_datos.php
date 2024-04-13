@@ -148,7 +148,7 @@ function seleccionar_datos($conPDO){
 
 function consulta($conPDO){
     try{
-        $sql = "SELECT * FROM usuarios";
+        $sql = "SELECT id, nombre, apellido, edad, provincia FROM usuarios";
         $stmt = $conPDO->prepare($sql);
         $stmt->execute();
         //Obtiene los resultados como un array asociativo
