@@ -11,5 +11,17 @@ class Empleado {
     public function getNombre(){
         return $this->nombre;
     }
+
+    //1. Aumentar en 1 el valor de $numEmpleado cada vez que se cree un objeto de la clase Empleado
+
+    public function __construct($nombre, $salario){
+        if($salario <= 20000){
+            $this->nombre = $nombre;
+            $this->salario = $salario;
+            self::$numEmpleado++;
+        } else {
+            echo "El salario introducido no es válido.";
+        }
+    }
 }
 ?>
