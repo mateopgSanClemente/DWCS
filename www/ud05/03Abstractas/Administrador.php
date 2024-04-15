@@ -30,7 +30,7 @@ class Administrador extends Persona{
         return $this->apellidos;
     }
     public function accion(){
-        if($thid->id[0] == 'a'){
+        if($this->id[0] == 'a'){
             echo "<br>CARACTERÍSTICAS:
             <br>\t-ID: $this->id
             <br>\t-Nombre: $this->nombre
