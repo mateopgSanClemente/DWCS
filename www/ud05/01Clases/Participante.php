@@ -1,9 +1,9 @@
 <?php
     class Participante {
-        private $nombre;
-        private $edad;
+        private string $nombre;
+        private int $edad;
 
-        public function __construct($nombre, $edad){
+        public function __construct(string $nombre, int $edad){
             $this->nombre = $nombre;
             $this->edad = $edad;
         }
@@ -16,11 +16,11 @@
             return $this->edad;
         }
 
-        public function setNombre($nombre){
+        public function setNombre(string $nombre){
             $this->nombre = $nombre;
         }
 
-        public function setEdad($edad){
+        public function setEdad(int $edad){
             $this->edad = $edad;
         }
     }
