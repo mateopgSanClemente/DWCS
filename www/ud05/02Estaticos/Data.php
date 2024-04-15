@@ -18,7 +18,7 @@
         }
 
         public static function getHora(){
-            return date('H:I:s');
+            return date('H:i:s');
         }
         /*
         *   TODO: Modificar el método para que este muestre elsiguiente mensaje:
@@ -26,12 +26,14 @@
         */
         public static function getDataHora(){
             $fechaActual = self::getData();
-            $diaSemana = date('l');
-            $mes = date('F');
             $ano = date('Y');
-            $hora = getHora();
-            $mensaje = "Usamos el calendario: " . self::$calendario . "\n";
-            $mensaje .= "Hoy es $diaSemana de $mes de $ano y son las $hora";
+            $mes = self::$meses[date('n')-1];
+            $dia = self::$dias[date('w')];
+            $numeroDia = date('n');
+            $hora = self::getHora();
+            $mensaje = "Usamos el calendario: " . self::$calendario . "<br>";
+            $mensaje .= "Hoy es $dia $numeroDia de $mes de $ano y son las $hora";
+            echo $mensaje;
         }
     }
 ?>
