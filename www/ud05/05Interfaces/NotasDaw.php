@@ -2,7 +2,7 @@
 require_once "CalculosCentroEstudios.php";
 require_once "Notas.php";
 class NotasDaw extends Notas implements CalculosCentroEstudios{
-    
+
     function numeroDeAprobados(){
         $contadorAprobados = 0;
         foreach ($this->notas as $nota){
@@ -30,6 +30,14 @@ class NotasDaw extends Notas implements CalculosCentroEstudios{
         }
         $notaMedia = $notaMedia / count($this->notas);
         return $notaMedia;
+    }
+
+    public function toString(){
+        $stringNotas = "";
+        foreach ($this->notas as $nota){
+            $stringNotas .= $nota . "<br>";
+        }
+        return $stringNotas;
     }
 }
 ?>

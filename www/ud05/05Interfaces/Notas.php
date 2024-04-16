@@ -1,10 +1,10 @@
 <?php
 require_once "CalculosCentroEstudios.php";
-class Notas implements CalculosCentroEstudios{
-    private array $notas = [];
+abstract class Notas{
+    protected array $notas;
     
     public function __construct(array $notas){
-        $this->$notas = $notas;
+        $this->setNotas($notas);
     }
 
     public function setNotas(array $notas){
@@ -15,12 +15,6 @@ class Notas implements CalculosCentroEstudios{
         return $this->notas;
     }
 
-    public function toString(){
-        $stringNotas = "";
-        foreach ($this->notas as $nota){
-            $stringNotas .= $nota . "<br>";
-        }
-        return $notas;
-    }
+    abstract public function toString();
 }
 ?>
