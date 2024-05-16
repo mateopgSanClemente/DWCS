@@ -1,8 +1,9 @@
 <?php
 trait CalculosCentroEstudios {
-    function numeroDeAprobados(){
+    //TODO: Adaptar los métodos al ejercicio actual
+    function numeroDeAprobados(array $arrayNotas){
         $contadorAprobados = 0;
-        foreach ($this->notas as $nota){
+        foreach ($this->$arrayNotas as $nota){
             if($nota >= 5){
                 $contadorAprobados++;
             }
@@ -10,9 +11,9 @@ trait CalculosCentroEstudios {
         return $contadorAprobados;
     }
 
-    function numeroDeSuspensos(){
+    function numeroDeSuspensos(array $arrayNotas){
         $contadorSuspensos = 0;
-        foreach ($this->notas as $nota){
+        foreach ($arrayNotas as $nota){
             if($nota < 5){
                 $contadorSuspensos++;
             }
@@ -20,12 +21,12 @@ trait CalculosCentroEstudios {
         return $contadorSuspensos;
     }
     
-    function notaMedia(){
+    function notaMedia(array $arrayNotas){
         $notaMedia = 0;
-        foreach ($this->notas as $nota){
+        foreach ($arrayNotas as $nota){
             $notaMedia += $nota;
         }
-        $notaMedia = $notaMedia / count($this->notas);
+        $notaMedia = $notaMedia / count($arrayNotas);
         return $notaMedia;
     }
 }
