@@ -2,8 +2,7 @@
 require_once "CalculosCentroEstudios.php";
 require_once "MostrarCalculos.php";
 class NotasTrait{
-    use CalculosCentroEstudios;
-    use mostarCalculos;
+    use CalculosCentroEstudios, mostarCalculos;
 
     private array $arrayNotas;
 
@@ -18,5 +17,13 @@ class NotasTrait{
     public function setNotas(array $arrayNotas){
         $this->arrayNotas = $arrayNotas;
     }
+
+    function resultados (array $notas) {
+        $
+    }
 }
+
+$notas = [5, 5, 5, 5, 10];
+$claseNotas = new NotasTrait($notas);
+$claseNotas->getNotas
 ?>
