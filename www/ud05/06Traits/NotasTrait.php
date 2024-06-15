@@ -18,8 +18,8 @@ class NotasTrait{
         $this->arrayNotas = $arrayNotas;
     }
 
-    function resultados (array $notas) {
-        $
+    public function resultados (array $notas) {
+        $numeroAprobados;
     }
 }
 

@@ -41,6 +41,7 @@
                         } else {
                             echo "<br>Su nombre tiene " . strlen($_POST["nombre"]) . " caracteres.";
                         }
+                        //Existen formas más sencillas de hacer esto, una es usar la función substr($string, $inicio, $longitud) y otra es usar un bucle for con el operado ".=". 
                         echo "<br>Los tres primeros caractes de tu nombre son: " . $_POST["nombre"][0] . $_POST["nombre"][1] . $_POST["nombre"][2] . "."; //Problema: Que pasa si el nombre tiene menos de 3 caracteres? Da error por que las posiciones señaladas dentro de la cadena no existen!
                         //Encontrar la posición de la letra 'A' dentro de la cadena 'apellidos'
                         for ($i=0; $i < strlen($_POST["apellidos"]); $i++){

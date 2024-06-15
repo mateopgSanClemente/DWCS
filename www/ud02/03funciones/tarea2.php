@@ -10,6 +10,7 @@
  */
 function comprobar_nif($nif){
     //Obtener digitos del dni y convertir esta variable a un tipo numerico;
+    //NOTA: Podría crear el array sin indicar el índice
     $tablaLetraNif = [
         0 => "T",
         1 => "R",
@@ -41,7 +42,8 @@ function comprobar_nif($nif){
     for ($i = 0; $i < 8; $i++){
         $digitosDNI = $digitosDNI . $nif[$i];
     }
-    $digitosDNI =intval($digitosDNI, 10);
+    //Retornar el tipo de dato entero correspondiente al valor de un dato tipo String
+    $digitosDNI = intval($digitosDNI, 10);
     $moduloDNI = $digitosDNI%23;
     foreach($tablaLetraNif as $resto => $letra){
         if ($moduloDNI == $resto && $letraDNI == $letra){

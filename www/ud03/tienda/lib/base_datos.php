@@ -32,6 +32,14 @@ function seleccionar_bd_tienda($conPDO){
     $sql="USE tienda;";
     $conPDO->exec($sql);
 }
+/*
+Una alternativa a bloque de código para seleccionar una bd específica a través de parámetro puede ser:
+function seleccionar_bd_tienda($conPDO, $nombre_db){
+
+    $sql="USE $nombre_db;";
+    $conPDO->exec($sql);
+}
+*/
 
 //EJECUTAR CONSULTA
 function ejecutar_consulta($conPDO, $sql){

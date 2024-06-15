@@ -15,7 +15,11 @@ foreach ($matriz as $elemento){
     print ("<br>Elemento nº$contador: $elemento");
     $contador++;
 }
-
+function imprimirMatrizNumerica($matriz){
+    for($i=0; $i < count($matriz); $i++){
+        print("<br>$matriz[$i]");
+    }
+}
 /* 
 2. (Optativo) Cree una matriz con los siguientes datos: 
 `Batman`, `Superman`, `Krusty`, `Bob`, `Mel` y `Barney`.
@@ -25,11 +29,7 @@ foreach ($matriz as $elemento){
     - Ordene los elementos de la matriz e imprima la matriz ordenada. 
     - Agregue los siguientes elementos al comienzo de la matriz: `Apple`, `Melon`, `Watermelon`.
 */
-function imprimirMatrizNumerica($matriz){
-    for($i=0; $i < count($matriz); $i++){
-        print("<br>$matriz[$i]");
-    }
-}
+
 $simpsons = ["Batman", "Superman", "Krusty", "Bob", "Mel", "Barney"];
 imprimirMatrizNumerica($simpsons);
 //Eliminar última posición de la matriz

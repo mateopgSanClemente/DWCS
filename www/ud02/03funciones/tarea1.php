@@ -81,10 +81,7 @@ $cadenaMinus = "cadena minusculas";
 stringMayus($cadenaMinus);
 // 7. Crea una función que imprima a zona horaria (*timezone*) por defecto utilizada en PHP.
 function imprimirZonaHoraria (){
-    //Se indica la zona horaria
-    //date_default_timezone_set('Europe/Madrid');
-    //Se indican los locales para que los nombres aparezcan en español
-    //setlocale(LC_ALL, 'es_ES.UTF-8');
+    //La zona por defecto es:
     $zonaHorariaPorDefecto = date_default_timezone_get();
     echo "<br>$zonaHorariaPorDefecto";
 }
