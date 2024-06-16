@@ -9,4 +9,8 @@ Flight::route('/', function () {
     echo 'hello world!';
 });
 
+//Probando FLight
+Flight::route('/saludar', function (){
+    echo "Hola buenas tardes!";
+});
 Flight::start();
