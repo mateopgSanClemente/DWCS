@@ -26,6 +26,11 @@
         </div>
         <div...>
     */
+    //Abrir fichero e imprimirlo
+        echo "<div class=\"nota\">";
+            echo "<h3>Titulo de la nota</h3>";
+            echo "<p>" . readfile("notas/notas.txt") . "</p>";
+        echo "</div>";
     ?>
     
 </body>
