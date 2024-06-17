@@ -1,5 +1,6 @@
 {
     "require": {
-        "symfony/debug": "^4.4"
+        "symfony/debug": "^4.4",
+        "symfony/asset": "^7.1"
     }
 }

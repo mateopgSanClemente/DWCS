@@ -10,6 +10,7 @@ class ComposerStaticInitdb8b94a9515142dddec71997fbca03de
         'S' => 
         array (
             'Symfony\\Component\\Debug\\' => 24,
+            'Symfony\\Component\\Asset\\' => 24,
         ),
         'P' => 
         array (
@@ -21,6 +22,10 @@ class ComposerStaticInitdb8b94a9515142dddec71997fbca03de
         'Symfony\\Component\\Debug\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/debug',
+        ),
+        'Symfony\\Component\\Asset\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/asset',
         ),
         'Psr\\Log\\' => 
         array (
