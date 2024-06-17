@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <h1>Listar productos</h1>
+
+    <h2 class="mt-5 mb-4">Filtrar por tipo</h2>
+    <ul class="genre-list ps-0 mt-2 mb-3">
+        <li class="d-inline">
+            <a class="btn btn-primary btn-sm" href="#">Anillo</a>
+        </li>
+        <li class="d-inline">
+            <a class="btn btn-primary btn-sm" href="#">Pulseras</a>
+        </li>
+        <li class="d-inline">
+            <a class="btn btn-primary btn-sm" href="#">Colgantes</a>
+        </li>
+    </ul>
+
+    <div>
+         <h2 class="mt-5">Productos</h2>
+        <div class="row">
+            <div class="col col-md-4">
+                <div class="mixed-vinyl-container p-3 text-center">
+                    <img src="https://via.placeholder.com/300" data-src="https://via.placeholder.com/300" alt="Square placeholder img">
+                    <p class="mt-2"><strong>Anillo</strong></p>
+                    <span>120 Euros</span> | <span>Oro</span>
+                </div>
+            </div>
+            <div class="col col-md-4">
+                <div class="mixed-vinyl-container p-3 text-center">
+                    <img src="https://via.placeholder.com/300" data-src="https://via.placeholder.com/300" alt="Square placeholder img">
+                    <p class="mt-2"><strong>Pulsera </strong></p>
+                    <span>27 Euros</span> | <span>Plata</span>
+                </div>
+            </div>
+            <div class="col col-md-4">
+                <div class="mixed-vinyl-container p-3 text-center">
+                    <img src="https://via.placeholder.com/300" data-src="https://via.placeholder.com/300" alt="Square placeholder img">
+                    <p class="mt-2"><strong>Colgante</strong></p>
+                    <span>10 Euros</span> | <span>Acero</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
