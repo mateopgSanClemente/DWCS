@@ -11,7 +11,7 @@ services:
   - PROJNAME=symfony_projects
   hostname: symfony
   ports:
-  - "8000:8000"
+  - "8001:8000"
   volumes:
   - ./symfony_projects:/symfony_projects
 
