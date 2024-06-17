@@ -1,0 +1,32 @@
+{% extends 'bootstrap/base.html.twig' %}
+
+{% block body %}
+
+{# Título desta páxina #}
+<h1>Explorar {{ title | lower }}</h1>
+
+    <div>
+      {% if xenero == null %}
+        <p>Sección dedicada a explorar todos os libros da biblioteca.</p>
+        
+        {% for libro in libros.books %}
+          <dl>
+            <dt>
+              <em>{{ libro.title }}</em>, de {{ libro.author }} ({{ libro.published | slice (0,4) }})
+            </dt>
+            <dd>
+              {{ libro.description }}
+            </dd>
+          </dl>
+        {% endfor %}
+      {% endif %}
+      {% if xenero != null %}
+        Sección dedicada ao xénero: {{ title }}
+      {% endif %}
+
+    </div>
+  </body>
+</html>
+
+{% endblock %}
+

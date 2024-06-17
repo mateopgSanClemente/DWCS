@@ -1,0 +1,71 @@
+Instalar compose:
+# Actualizar paquetes del sistema
+sudo apt update
+sudo apt upgrade -y
+
+# Instalar dependencias requeridas
+sudo apt install curl php-cli php-mbstring git unzip -y
+
+# Descargar Composer
+cd ~
+curl -sS https://getcomposer.org/installer -o composer-setup.php
+
+# Verificar la integridad del instalador
+HASH=`curl -sS https://composer.github.io/installer.sig`
+php -r "if (hash_file('sha384', 'composer-setup.php') === '$HASH') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+
+# Instalar Composer globalmente
+sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+
+# Verificar la instalación
+composer --version
+
+------------------------------------------------
+
+Actualizar PHP a la última versión:
+# Instalar software-properties-common si no está instalado
+sudo apt update
+sudo apt install software-properties-common -y
+
+# Añadir el repositorio de Ondřej Surý
+sudo add-apt-repository ppa:ondrej/php
+
+# Actualizar los repositorios
+sudo apt update
+
+# Instalar PHP 8.2 y módulos adicionales
+sudo apt install php8.2 php8.2-cli php8.2-fpm php8.2-mysql php8.2-xml php8.2-curl php8.2-mbstring php8.2-zip php8.2-gd php8.2-intl php8.2-bcmath
+
+# Verificar la instalación
+php -v
+
+# Configurar PHP-FPM en Nginx (si es necesario)
+# sudo nano /etc/nginx/sites-available/your-site.conf
+
+# Recargar Nginx para aplicar cambios
+sudo systemctl reload nginx
+
+# Eliminar versiones antiguas de PHP (opcional)
+sudo apt remove php7.4 php7.4-cli php7.4-fpm php7.4-*
+sudo apt autoremove
+
+--------------------------------------------
+Instalar xml
+# Instalar la extensión XML para PHP 8.2
+sudo apt update
+sudo apt install php8.2-xml
+
+# Reiniciar Apache (si estás usando Apache)
+sudo systemctl restart apache2
+
+# Reiniciar Nginx (si estás usando Nginx)
+sudo systemctl restart nginx
+
+# Reiniciar PHP-FPM (si estás usando PHP-FPM)
+sudo systemctl restart php8.2-fpm
+
+# Verificar que la extensión XML esté habilitada
+php -m | grep xml
+
+# Ejecutar el comando Composer de nuevo
+sudo composer require templates

@@ -1,0 +1,34 @@
+{% extends 'bootstrap/base.html.twig' %}
+
+{% block body %}
+
+{# Título desta páxina #}
+<h1>{{ title }}</h1>
+
+    <div>
+        <h2>Xéneros dispoñíbeis</h2>
+    
+        <ul>
+        {% for xenero in xeneros %}
+            <li>
+                {{ xenero }}
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+    
+    <div>
+        <h2>Tipos de libros</h2>
+    
+        <dl>
+            {% for tipo in tipos %}
+                <dt>{{ tipo.abreviatura | upper }}:</dt>
+                <dd>{{ tipo.expansion }}</dd>
+            {% endfor %}
+        </dl>
+    </div>
+  </body>
+</html>
+
+{% endblock %}
+

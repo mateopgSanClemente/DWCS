@@ -1,0 +1,38 @@
+{# Chamamos á plantilla base #}
+{% extends 'bootstrap/base.html.twig' %}
+
+{# Iniciamos o bloque de contidos #}
+{% block body %}
+
+{# Título desta páxina #}
+<h1>{{ title }}</h1>
+
+    {# Apartado para falar sobre min. Recibe a variábel co meu nome e o array das afeccións #}
+    <div>
+        <h2>Sobre min</h2>
+        <p>Ola! Chámome {{ nome }}. Gústame ler e creei esta web para organizar a miña biblioteca.</p>
+        <p>As miñas afeccións son:
+            <ul>
+                {% for afeccion in afeccions %}
+                    <li>{{ afeccion }}</li>
+                {% endfor %}
+            <ul>
+        </p>
+    </div>
+    
+    {# Apartado para falar sobre a biblioteca. Recibe a variábel co número de exemplares #}
+    <div>
+        <h2>Sobre a biblioteca</h2>
+        <p>Compro libros constantemente, e esta biblioteca actualmente posúe {{ n_exemplares }} exemplares, aínda que seguramente o número siga medrando.</p>
+    </div>
+    
+    <hr/>
+    
+    {# No futuro footer convídase a poñerse en contacto. Recibe a variábel mail, que usa para crear un mailto: #}
+    <footer>
+    <p>Ponte en contacto comigo a través do meu correo: <a href="mailto:{{ mail }}">{{ mail }}</a>.</p>
+    </footer>
+
+
+{% endblock %}
+
